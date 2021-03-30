@@ -1,14 +1,20 @@
 package com.probit.parkapp;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-
+import android.Manifest;
+import android.content.pm.PackageManager;
+import android.location.Location;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
+
+
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.core.app.ActivityCompat;
+import androidx.fragment.app.Fragment;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -16,15 +22,21 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.UiSettings;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-public class MapsFragment extends Fragment {
+import java.util.ArrayList;
+import java.util.List;
+
+public class MapsFragment extends Fragment implements GoogleMap.OnMarkerClickListener, GoogleMap.OnMyLocationButtonClickListener, GoogleMap.OnMyLocationClickListener  {
 
 
     SupportMapFragment mapFragment;
 
+
     private OnMapReadyCallback callback = new OnMapReadyCallback() {
 
+        private final int LOCATION_PERMISSION_REQUEST_CODE = 1;
         /**
          * Manipulates the map once available.
          * This callback is triggered when the map is ready to be used.
@@ -34,31 +46,91 @@ public class MapsFragment extends Fragment {
          * install it inside the SupportMapFragment. This method will only be triggered once the
          * user has installed Google Play services and returned to the app.
          */
+
+        GoogleMap.OnMarkerClickListener onMarkerClickListener = new GoogleMap.OnMarkerClickListener() {
+            @Override
+            public boolean onMarkerClick(Marker marker) {
+                int position = (int) (marker.getTag());
+                Toast.makeText(getContext(), "Mando mensaje click" + position, Toast.LENGTH_LONG).show();
+
+                markerOnClick(marker);
+
+                return true;
+            }
+
+            private void markerOnClick(Marker marker) {
+                Toast.makeText(getContext(), "markerOnClick", Toast.LENGTH_LONG).show();
+
+
+            }
+        };
+
         @Override
         public void onMapReady(GoogleMap googleMap) {
 
             float zoom = 11;
+            int i = 0;
 
-            // Add a marker in Montevideo and move the camera
+
+            googleMap.setOnMarkerClickListener(onMarkerClickListener);
+
+            // Add a markers in Montevideo and move the camera
             LatLng montevideo = new LatLng(-34.90328, -56.18816);
-            googleMap.addMarker(new MarkerOptions().position(montevideo).title("Montevideo parkings"));
+            googleMap.addMarker(new MarkerOptions().position(montevideo).title("Montevideo parkings")).setTag(i);
             googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(montevideo, zoom));
+            i = i + 1;
 
-            // Colocar un marcador en la misma posición
-            //googleMap.addMarker(new MarkerOptions().position(montevideo));
-            // Más opciones para el marcador en:
-            // https://developers.google.com/maps/documentation/android/marker
+            LatLng montevideo2 = new LatLng(-34.914547, -56.157521);
+            googleMap.addMarker(new MarkerOptions().position(montevideo2).title("Montevideo2 parkings")).setTag(i);
+            i = i + 1;
+
+            LatLng montevideo3 = new LatLng(-34.906820, -56.150370);
+            googleMap.addMarker(new MarkerOptions().position(montevideo3).title("Montevideo3 parkings")).setTag(i);
+            i = i + 1;
+
+            googleMap.moveCamera(CameraUpdateFactory.newLatLng(montevideo2));
+            googleMap.moveCamera(CameraUpdateFactory.newLatLng(montevideo3));
 
             // Otras configuraciones pueden realizarse a través de UiSettings
             UiSettings uiSettings = googleMap.getUiSettings();
             uiSettings.setZoomControlsEnabled(true);
+            uiSettings.setMyLocationButtonEnabled(true);
+
+            if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                // TODO: Consider calling
+                //    ActivityCompat#requestPermissions
+                // here to request the missing permissions, and then overriding
+                // public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                //                                        int[] grantResults);
+                // to handle the case where the user grants the permission. See the documentation
+                // for Activity
+                // Compat#requestPermissions for more details.
+                String permiso1 = Manifest.permission.ACCESS_FINE_LOCATION;
+                String permiso2 = Manifest.permission.ACCESS_COARSE_LOCATION;
+                List<String> permissionlist = new ArrayList<>();
+                permissionlist.add(permiso1);
+                permissionlist.add(permiso2);
+
+                ActivityCompat.requestPermissions(getActivity(), permissionlist.toArray(new String[permissionlist.size()]), LOCATION_PERMISSION_REQUEST_CODE);
+            }
 
 
-//            LatLng sydney = new LatLng(-34, 151);
-//            googleMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
-//            googleMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+            if (LOCATION_PERMISSION_REQUEST_CODE == 0) {
+                return;
+            }
+            else{
+                googleMap.setMyLocationEnabled(true);
+            }
+
+
+
+
+
+
+
         }
     };
+    
 
     @Nullable
     @Override
@@ -67,6 +139,8 @@ public class MapsFragment extends Fragment {
                              @Nullable Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_maps, container, false);
     }
+
+
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -80,30 +154,50 @@ public class MapsFragment extends Fragment {
         }
     }
 
+
+
     @Override
     public void onDestroy() {
         super.onDestroy();
         mapFragment.onDestroy();
     }
 
+
     @Override
     public void onPause() {
         super.onPause();
-//        mapFragment.onPause();
-        Log.i("i/MapsFragment", "OnPause");
+        mapFragment.onPause();
+//        Log.i("i/MapsFragment", "OnPause");
     }
+
 
     @Override
     public void onResume() {
         super.onResume();
-        Log.i("i/MapsFragment", "OnResume");
-//        mapFragment.onResume();
+        mapFragment.onResume();
     }
+    
 
     @Override
     public void onStop() {
         super.onStop();
-//        mapFragment.onStop();
-        Log.i("i/MapsFragment", "OnStop");
+        mapFragment.onStop();
+    }
+
+    @Override
+    public boolean onMarkerClick(Marker marker) {
+
+        return false;
+    }
+
+    @Override
+    public boolean onMyLocationButtonClick() {
+        return false;
+
+    }
+
+    @Override
+    public void onMyLocationClick(@NonNull Location location) {
+
     }
 }

@@ -9,17 +9,27 @@
         android:id="@+id/navigation_map"
         android:name="com.probit.parkapp.MapsFragment"
         android:label="@string/title_map"
+        tools:layout="@layout/fragment_maps"
+        />
+
+    <fragment
+        android:id="@+id/reserva_map"
+        android:name="com.probit.parkapp.MapsFragment"
+        android:label="@string/title_map"
+
+
+        tools:layout="@layout/fragment_maps"
         />
 
     <fragment
         android:id="@+id/navigation_dashboard"
         android:name="com.probit.parkapp.ui.dashboard.DashboardFragment"
-        android:label="@string/title_dashboard"
+        android:label="@string/title_reservas"
         tools:layout="@layout/fragment_dashboard" />
 
     <fragment
         android:id="@+id/navigation_notifications"
         android:name="com.probit.parkapp.ui.notifications.NotificationsFragment"
-        android:label="@string/title_notifications"
+        android:label="@string/title_perfil"
         tools:layout="@layout/fragment_notifications" />
 </navigation>
