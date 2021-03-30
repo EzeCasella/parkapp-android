@@ -14,6 +14,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "1037149883192-finv2qbjkv0et3dpruf4dn38h6ja2asn.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.probit.parkapp",
+            "certificate_hash": "78f197f5cd7fba8a9b891b1898bcf78f94dedc09"
+          }
+        },
+        {
           "client_id": "1037149883192-9l6jgu01an5odtciibrghh9ugno06igr.apps.googleusercontent.com",
           "client_type": 3
         }
