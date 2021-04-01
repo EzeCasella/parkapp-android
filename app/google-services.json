@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "1037149883192",
+    "project_id": "parkapp-ae6fa",
+    "storage_bucket": "parkapp-ae6fa.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1037149883192:android:45e5d691e4a463c5fdcfcd",
+        "android_client_info": {
+          "package_name": "com.probit.parkapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1037149883192-finv2qbjkv0et3dpruf4dn38h6ja2asn.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.probit.parkapp",
+            "certificate_hash": "78f197f5cd7fba8a9b891b1898bcf78f94dedc09"
+          }
+        },
+        {
+          "client_id": "1037149883192-9l6jgu01an5odtciibrghh9ugno06igr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBRYe7946b99PDAKKAyE_6KykmktVAwV0A"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1037149883192-9l6jgu01an5odtciibrghh9ugno06igr.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
