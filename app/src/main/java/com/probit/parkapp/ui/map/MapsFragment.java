@@ -1,20 +1,24 @@
-package com.probit.parkapp;
+package com.probit.parkapp.ui.map;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
-
 
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -24,17 +28,22 @@ import com.google.android.gms.maps.UiSettings;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.probit.parkapp.R;
+import com.probit.parkapp.ui.dashboard.DashboardViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class MapsFragment extends Fragment implements GoogleMap.OnMarkerClickListener, GoogleMap.OnMyLocationButtonClickListener, GoogleMap.OnMyLocationClickListener  {
+public class MapsFragment extends Fragment implements GoogleMap.OnMarkerClickListener, GoogleMap.OnMyLocationButtonClickListener, GoogleMap.OnMyLocationClickListener {
 
 
+    private static final int LOCATION_PERMISSION_REQUEST_CODE = 1;
     SupportMapFragment mapFragment;
-
+    private MapsViewModel mViewModel;
+    boolean tienePermiso = false;
 
     private OnMapReadyCallback callback = new OnMapReadyCallback() {
+
 
         private final int LOCATION_PERMISSION_REQUEST_CODE = 1;
         /**
@@ -65,11 +74,16 @@ public class MapsFragment extends Fragment implements GoogleMap.OnMarkerClickLis
             }
         };
 
+
         @Override
         public void onMapReady(GoogleMap googleMap) {
 
             float zoom = 11;
             int i = 0;
+
+            // Otras configuraciones pueden realizarse a través de UiSettings
+            UiSettings uiSettings = googleMap.getUiSettings();
+            uiSettings.setZoomControlsEnabled(true);
 
 
             googleMap.setOnMarkerClickListener(onMarkerClickListener);
@@ -91,11 +105,6 @@ public class MapsFragment extends Fragment implements GoogleMap.OnMarkerClickLis
             googleMap.moveCamera(CameraUpdateFactory.newLatLng(montevideo2));
             googleMap.moveCamera(CameraUpdateFactory.newLatLng(montevideo3));
 
-            // Otras configuraciones pueden realizarse a través de UiSettings
-            UiSettings uiSettings = googleMap.getUiSettings();
-            uiSettings.setZoomControlsEnabled(true);
-            uiSettings.setMyLocationButtonEnabled(true);
-
             if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                 // TODO: Consider calling
                 //    ActivityCompat#requestPermissions
@@ -112,35 +121,58 @@ public class MapsFragment extends Fragment implements GoogleMap.OnMarkerClickLis
                 permissionlist.add(permiso2);
 
                 ActivityCompat.requestPermissions(getActivity(), permissionlist.toArray(new String[permissionlist.size()]), LOCATION_PERMISSION_REQUEST_CODE);
-            }
 
 
-            if (LOCATION_PERMISSION_REQUEST_CODE == 0) {
-                return;
             }
-            else{
+            else {
                 googleMap.setMyLocationEnabled(true);
+                uiSettings.setMyLocationButtonEnabled(true);
             }
-
-
-
-
 
 
 
         }
     };
-    
+
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        switch (requestCode) {
+            case LOCATION_PERMISSION_REQUEST_CODE:
+                if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    // Permission Granted
+
+                } else {
+                    // Permission Denied
+                    Toast.makeText(getActivity(), "No se aceptó permisos", Toast.LENGTH_LONG).show();
+                }
+            default:
+                super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        }
+    }
+
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
                              @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_maps, container, false);
+//        return inflater.inflate(R.layout.fragment_maps, container, false);
+
+        mViewModel =
+                new ViewModelProvider(this).get(MapsViewModel.class);
+        View root = inflater.inflate(R.layout.fragment_maps, container, false);
+
+        return root;
+
     }
 
-
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        mViewModel = new ViewModelProvider(this).get(MapsViewModel.class);
+        // TODO: Use the ViewModel
+    }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
