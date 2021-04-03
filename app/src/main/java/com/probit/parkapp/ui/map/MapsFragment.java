@@ -135,14 +135,6 @@ public class MapsFragment extends Fragment implements GoogleMap.OnMarkerClickLis
                              @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
 
-        mapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
-
-        if (mapFragment != null) {
-            mapFragment.getMapAsync(callback);
-
-        }
-
-
         return inflater.inflate(R.layout.fragment_maps, container, false);
 
        /* mViewModel =
