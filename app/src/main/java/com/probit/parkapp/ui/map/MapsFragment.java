@@ -5,6 +5,7 @@ import android.annotation.SuppressLint;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,6 +30,8 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.probit.parkapp.R;
+import com.probit.parkapp.model.Parking;
+import com.probit.parkapp.repositories.ParkingsRepository;
 import com.probit.parkapp.ui.dashboard.DashboardViewModel;
 
 import java.util.ArrayList;
@@ -46,74 +49,37 @@ public class MapsFragment extends Fragment implements GoogleMap.OnMarkerClickLis
 
 
         private final int LOCATION_PERMISSION_REQUEST_CODE = 1;
-        /**
-         * Manipulates the map once available.
-         * This callback is triggered when the map is ready to be used.
-         * This is where we can add markers or lines, add listeners or move the camera.
-         * In this case, we just add a marker near Sydney, Australia.
-         * If Google Play services is not installed on the device, the user will be prompted to
-         * install it inside the SupportMapFragment. This method will only be triggered once the
-         * user has installed Google Play services and returned to the app.
-         */
 
-        GoogleMap.OnMarkerClickListener onMarkerClickListener = new GoogleMap.OnMarkerClickListener() {
-            @Override
-            public boolean onMarkerClick(Marker marker) {
-                int position = (int) (marker.getTag());
-                Toast.makeText(getContext(), "Mando mensaje click" + position, Toast.LENGTH_LONG).show();
-
-                markerOnClick(marker);
-
-                return true;
-            }
-
-            private void markerOnClick(Marker marker) {
-                Toast.makeText(getContext(), "markerOnClick", Toast.LENGTH_LONG).show();
-
-
-            }
-        };
 
 
         @Override
         public void onMapReady(GoogleMap googleMap) {
 
-            float zoom = 11;
-            int i = 0;
-
-            // Otras configuraciones pueden realizarse a través de UiSettings
+            googleMap.setOnMarkerClickListener(onMarkerClickListener);
             UiSettings uiSettings = googleMap.getUiSettings();
             uiSettings.setZoomControlsEnabled(true);
 
+            ParkingsRepository.getParkings(data -> {
+                ArrayList<Parking> parkings = (ArrayList<Parking>) data;
+                int i = 0;
+                for (Parking park : parkings) {
+                    float latitud = Float.parseFloat(park.getLatitude()) ;
+                    float longitud = Float.parseFloat(park.getLongitude());
+                    float zoom = 13;
 
-            googleMap.setOnMarkerClickListener(onMarkerClickListener);
 
-            // Add a markers in Montevideo and move the camera
-            LatLng montevideo = new LatLng(-34.90328, -56.18816);
-            googleMap.addMarker(new MarkerOptions().position(montevideo).title("Montevideo parkings")).setTag(i);
-            googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(montevideo, zoom));
-            i = i + 1;
+                    LatLng montevideo = new LatLng(latitud, longitud);
+                    googleMap.addMarker(new MarkerOptions().position(montevideo).title(park.getName())).setTag(i);
+                    googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(montevideo, zoom));
+                    i = i + 1;
 
-            LatLng montevideo2 = new LatLng(-34.914547, -56.157521);
-            googleMap.addMarker(new MarkerOptions().position(montevideo2).title("Montevideo2 parkings")).setTag(i);
-            i = i + 1;
+                    }
 
-            LatLng montevideo3 = new LatLng(-34.906820, -56.150370);
-            googleMap.addMarker(new MarkerOptions().position(montevideo3).title("Montevideo3 parkings")).setTag(i);
-            i = i + 1;
+                });
 
-            googleMap.moveCamera(CameraUpdateFactory.newLatLng(montevideo2));
-            googleMap.moveCamera(CameraUpdateFactory.newLatLng(montevideo3));
 
             if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                // TODO: Consider calling
-                //    ActivityCompat#requestPermissions
-                // here to request the missing permissions, and then overriding
-                // public void onRequestPermissionsResult(int requestCode, String[] permissions,
-                //                                        int[] grantResults);
-                // to handle the case where the user grants the permission. See the documentation
-                // for Activity
-                // Compat#requestPermissions for more details.
+
                 String permiso1 = Manifest.permission.ACCESS_FINE_LOCATION;
                 String permiso2 = Manifest.permission.ACCESS_COARSE_LOCATION;
                 List<String> permissionlist = new ArrayList<>();
@@ -122,16 +88,27 @@ public class MapsFragment extends Fragment implements GoogleMap.OnMarkerClickLis
 
                 ActivityCompat.requestPermissions(getActivity(), permissionlist.toArray(new String[permissionlist.size()]), LOCATION_PERMISSION_REQUEST_CODE);
 
-
             }
             else {
                 googleMap.setMyLocationEnabled(true);
                 uiSettings.setMyLocationButtonEnabled(true);
             }
-
-
-
         }
+    };
+
+
+
+
+    GoogleMap.OnMarkerClickListener onMarkerClickListener = new GoogleMap.OnMarkerClickListener() {
+        @Override
+        public boolean onMarkerClick(Marker marker) {
+//            int position = (int) (marker.getTag());
+//            Toast.makeText(getContext(), "Mando mensaje click" + position, Toast.LENGTH_LONG).show();
+
+
+            return false;
+        }
+
     };
 
 
@@ -157,22 +134,31 @@ public class MapsFragment extends Fragment implements GoogleMap.OnMarkerClickLis
     public View onCreateView(@NonNull LayoutInflater inflater,
                              @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-//        return inflater.inflate(R.layout.fragment_maps, container, false);
 
-        mViewModel =
+        mapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
+
+        if (mapFragment != null) {
+            mapFragment.getMapAsync(callback);
+
+        }
+
+
+        return inflater.inflate(R.layout.fragment_maps, container, false);
+
+       /* mViewModel =
                 new ViewModelProvider(this).get(MapsViewModel.class);
         View root = inflater.inflate(R.layout.fragment_maps, container, false);
 
-        return root;
+        return root;*/
 
     }
 
-    @Override
+    /*@Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         mViewModel = new ViewModelProvider(this).get(MapsViewModel.class);
         // TODO: Use the ViewModel
-    }
+    }*/
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -218,7 +204,8 @@ public class MapsFragment extends Fragment implements GoogleMap.OnMarkerClickLis
 
     @Override
     public boolean onMarkerClick(Marker marker) {
-
+        int position = (int) (marker.getTag());
+        Toast.makeText(getContext(), "Mando mensaje click" + position, Toast.LENGTH_LONG).show();
         return false;
     }
 
