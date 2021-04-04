@@ -1,9 +1,11 @@
 package com.probit.parkapp.ui.dashboard;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -13,9 +15,15 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.probit.parkapp.R;
+import com.probit.parkapp.model.Parking;
+import com.probit.parkapp.repositories.ParkingsRepository;
+
+import java.util.ArrayList;
 
 public class DashboardFragment extends Fragment {
 
+
+    private static final String TAG = "DashboardFragment";
     private DashboardViewModel dashboardViewModel;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -30,6 +38,25 @@ public class DashboardFragment extends Fragment {
                 textView.setText(s);
             }
         });
+
+        Button btnLogParkings = root.findViewById(R.id.button_log_parkings);
+        btnLogParkings.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                logParkings();
+            }
+        });
+
         return root;
+    }
+
+    private void logParkings() {
+
+        ParkingsRepository.getParkings(data -> {
+            ArrayList<Parking> parkings = (ArrayList<Parking>) data;
+            for (Parking park : parkings) {
+                Log.i(TAG, park.getName());
+            }
+        });
     }
 }
