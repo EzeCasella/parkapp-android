@@ -44,6 +44,9 @@ public class MapsFragment extends Fragment implements GoogleMap.OnMarkerClickLis
     SupportMapFragment mapFragment;
     private MapsViewModel mViewModel;
     boolean tienePermiso = false;
+    private GoogleMap googleMap;
+//    UiSettings uiSettings = googleMap.getUiSettings();
+
 
     private OnMapReadyCallback callback = new OnMapReadyCallback() {
 
@@ -51,19 +54,22 @@ public class MapsFragment extends Fragment implements GoogleMap.OnMarkerClickLis
         private final int LOCATION_PERMISSION_REQUEST_CODE = 1;
 
 
-
         @Override
         public void onMapReady(GoogleMap googleMap) {
 
             googleMap.setOnMarkerClickListener(onMarkerClickListener);
+            googleMap.setOnInfoWindowClickListener(onInfoWindowClickListener);
             UiSettings uiSettings = googleMap.getUiSettings();
             uiSettings.setZoomControlsEnabled(true);
+            uiSettings.setMyLocationButtonEnabled(true);
+            uiSettings.setMapToolbarEnabled(false);
+
 
             ParkingsRepository.getParkings(data -> {
                 ArrayList<Parking> parkings = (ArrayList<Parking>) data;
                 int i = 0;
                 for (Parking park : parkings) {
-                    float latitud = Float.parseFloat(park.getLatitude()) ;
+                    float latitud = Float.parseFloat(park.getLatitude());
                     float longitud = Float.parseFloat(park.getLongitude());
                     float zoom = 13;
 
@@ -73,9 +79,9 @@ public class MapsFragment extends Fragment implements GoogleMap.OnMarkerClickLis
                     googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(montevideo, zoom));
                     i = i + 1;
 
-                    }
+                }
 
-                });
+            });
 
 
             if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
@@ -88,37 +94,39 @@ public class MapsFragment extends Fragment implements GoogleMap.OnMarkerClickLis
 
                 ActivityCompat.requestPermissions(getActivity(), permissionlist.toArray(new String[permissionlist.size()]), LOCATION_PERMISSION_REQUEST_CODE);
 
-            }
-            else {
+            } else {
                 googleMap.setMyLocationEnabled(true);
-                uiSettings.setMyLocationButtonEnabled(true);
+
             }
         }
     };
-
-
 
 
     GoogleMap.OnMarkerClickListener onMarkerClickListener = new GoogleMap.OnMarkerClickListener() {
         @Override
         public boolean onMarkerClick(Marker marker) {
             int position = (int) (marker.getTag());
-            Toast.makeText(getContext(), "Mando mensaje click" + position, Toast.LENGTH_LONG).show();
-
-
-            return true;
+            Toast.makeText(getContext(), "Mando mensaje click" + position, Toast.LENGTH_SHORT).show();
+            return false;
         }
 
     };
 
+    GoogleMap.OnInfoWindowClickListener onInfoWindowClickListener = new GoogleMap.OnInfoWindowClickListener() {
+        @Override
+        public void onInfoWindowClick(Marker marker) {
+            Toast.makeText(getContext(), "ENTRO A RESERVAR" , Toast.LENGTH_SHORT).show();
+        }
+    };
 
+    @SuppressLint("MissingPermission")
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         switch (requestCode) {
             case LOCATION_PERMISSION_REQUEST_CODE:
                 if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     // Permission Granted
-
+                    googleMap.setMyLocationEnabled(true);
                 } else {
                     // Permission Denied
                     Toast.makeText(getActivity(), "No se aceptó permisos", Toast.LENGTH_LONG).show();
@@ -196,8 +204,6 @@ public class MapsFragment extends Fragment implements GoogleMap.OnMarkerClickLis
 
     @Override
     public boolean onMarkerClick(Marker marker) {
-        int position = (int) (marker.getTag());
-        Toast.makeText(getContext(), "Mando mensaje click" + position, Toast.LENGTH_LONG).show();
         return false;
     }
 
