@@ -102,11 +102,11 @@ public class MapsFragment extends Fragment implements GoogleMap.OnMarkerClickLis
     GoogleMap.OnMarkerClickListener onMarkerClickListener = new GoogleMap.OnMarkerClickListener() {
         @Override
         public boolean onMarkerClick(Marker marker) {
-//            int position = (int) (marker.getTag());
-//            Toast.makeText(getContext(), "Mando mensaje click" + position, Toast.LENGTH_LONG).show();
+            int position = (int) (marker.getTag());
+            Toast.makeText(getContext(), "Mando mensaje click" + position, Toast.LENGTH_LONG).show();
 
 
-            return false;
+            return true;
         }
 
     };
