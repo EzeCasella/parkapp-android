@@ -138,12 +138,13 @@
 
     <Button
         android:id="@+id/button_logout"
-        android:textColor="#fafafa"
-        android:background="@drawable/buttonstyleithgradient"
-        android:layout_marginTop="28dp"
-        android:layout_gravity="center_horizontal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Log out"/>
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="28dp"
+        android:background="@drawable/buttonstyleithgradient"
+        android:text="Logout"
+        android:textColor="@color/white"
+        app:backgroundTint="@color/startblue" />
 
 </LinearLayout>
