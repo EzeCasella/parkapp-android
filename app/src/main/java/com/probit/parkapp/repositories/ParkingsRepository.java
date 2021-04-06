@@ -13,6 +13,7 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.probit.parkapp.common.Callback;
 import com.probit.parkapp.model.Parking;
 
 import java.util.ArrayList;
@@ -23,11 +24,7 @@ public class ParkingsRepository {
 
     private static final String TAG = "ParkingsRepository";
 
-    public interface OnCompleteCallback {
-        public void execute(Object data);
-    }
-
-     public static void getParkings(OnCompleteCallback callback) {
+     public static void getParkings(Callback.OnSuccess onSuccess, Callback.OnFailure onFailure) {
         // Access a Cloud Firestore instance from your Activity
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
@@ -42,9 +39,10 @@ public class ParkingsRepository {
                                 Parking parking = new Parking(document);
                                 parks.add(parking);
                             }
-                            callback.execute(parks);
+                            onSuccess.run(parks);
                         } else {
                             Log.w(TAG, "Error getting documents.", task.getException());
+                            onFailure.run("Error getting documents.");
                         }
                     }
                 });
