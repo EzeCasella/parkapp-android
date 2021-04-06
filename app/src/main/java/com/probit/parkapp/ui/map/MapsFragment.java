@@ -68,19 +68,18 @@ public class MapsFragment extends Fragment implements GoogleMap.OnMarkerClickLis
             ParkingsRepository.getParkings(data -> {
                 ArrayList<Parking> parkings = (ArrayList<Parking>) data;
                 int i = 0;
+                float zoom = 13;
+                LatLng montevideo = new LatLng(-34.90328, -56.18816);
                 for (Parking park : parkings) {
                     float latitud = Float.parseFloat(park.getLatitude());
                     float longitud = Float.parseFloat(park.getLongitude());
-                    float zoom = 13;
-
-
-                    LatLng montevideo = new LatLng(latitud, longitud);
-                    googleMap.addMarker(new MarkerOptions().position(montevideo).title(park.getName())).setTag(i);
-                    googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(montevideo, zoom));
+                    LatLng parking = new LatLng(latitud, longitud);
+                    googleMap.addMarker(new MarkerOptions().position(parking).title(park.getName())).setTag(i);
                     i = i + 1;
 
                 }
 
+                googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(montevideo, zoom));
             });
 
 
