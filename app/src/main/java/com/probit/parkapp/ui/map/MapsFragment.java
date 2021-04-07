@@ -80,7 +80,9 @@ public class MapsFragment extends Fragment implements GoogleMap.OnMarkerClickLis
                 }
 
                 googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(montevideo, zoom));
-            });
+            },
+                    // TODO: cambiar a manejo correcto de excepcion
+                    error -> {} );
 
 
             if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {

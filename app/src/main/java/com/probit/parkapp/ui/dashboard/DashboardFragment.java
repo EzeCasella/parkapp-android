@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -15,17 +16,25 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.google.firebase.Timestamp;
 import com.probit.parkapp.R;
 import com.probit.parkapp.model.Parking;
+import com.probit.parkapp.model.User;
+import com.probit.parkapp.repositories.AuthRepository;
 import com.probit.parkapp.repositories.ParkingsRepository;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 
 public class DashboardFragment extends Fragment {
 
 
     private static final String TAG = "DashboardFragment";
+
     private DashboardViewModel dashboardViewModel;
+    private DatePicker datePicker;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -44,9 +53,12 @@ public class DashboardFragment extends Fragment {
         btnLogParkings.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                logParkings();
+//                createSchedule();
+                logCurrentUser();
             }
         });
+
+        datePicker = root.findViewById(R.id.dashboard_datepicker);
 
         return root;
     }
@@ -59,5 +71,36 @@ public class DashboardFragment extends Fragment {
                 Log.i(TAG, park.getName());
             }
         }, error -> Toast.makeText(requireActivity(), error.toString() , Toast.LENGTH_LONG));
+    }
+
+    private void logCurrentUser() {
+        AuthRepository.getCurrentUser(user -> {
+            String email = ((User) user).getEmail();
+            Log.i(TAG, email);
+        }, error -> {});
+    }
+
+    private void createSchedule() {
+
+//        SchedulesRepository.createSchedule();
+
+        Date dt = new Date();
+        //Initialize your Date however you like it.
+        Date date = new Date();
+        Calendar calendar = new GregorianCalendar();
+        calendar.setTime(date);
+        int year = calendar.get(Calendar.YEAR);
+//Add one to month {0 - 11}
+        int month = calendar.get(Calendar.MONTH) + 1;
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
+        Timestamp ts = new Timestamp(dt);
+        Log.i(TAG, dt.toString());
+        Log.i(TAG,ts.toString());
+        Log.i(TAG, "Dia: "+datePicker.getDayOfMonth() + ", Anio: "+ datePicker.getYear());
+
+//        TimePicker tp;
+//        tp.get
+
+//        Date dtt = new SimpleDateFormat("")
     }
 }
