@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+   <TextView
+       android:id="@+id/fecha_desde"
+       android:layout_width="180dp"
+       android:layout_height="wrap_content"
+       android:hint="Fecha desde..."
+       app:layout_constraintLeft_toLeftOf="parent"
+       app:layout_constraintTop_toTopOf="parent"
+       android:ems="10"
+       android:inputType="date"
+       tools:layout_editor_absoluteX="64dp"
+       tools:layout_editor_absoluteY="507dp"/>
+
+    <EditText
+        android:id="@+id/hora_desde"
+        android:layout_width="180dp"
+        android:layout_height="wrap_content"
+        android:hint="Hora desde..."
+        app:layout_constraintLeft_toRightOf="@id/fecha_desde"
+        app:layout_constraintTop_toTopOf="parent"
+        android:ems="10"
+        android:inputType="time"
+        tools:layout_editor_absoluteX="46dp"
+        tools:layout_editor_absoluteY="604dp"/>
+
+    <EditText
+        android:id="@+id/fecha_hasta"
+        android:layout_width="180dp"
+        android:layout_height="wrap_content"
+        android:hint="Fecha hasta..."
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/fecha_desde"
+        android:ems="10"
+        android:inputType="date"
+        tools:layout_editor_absoluteX="64dp"
+        tools:layout_editor_absoluteY="507dp"/>
+
+    <EditText
+        android:id="@+id/hora_hasta"
+        android:layout_width="180dp"
+        android:layout_height="wrap_content"
+        android:hint="Hora hasta..."
+        app:layout_constraintLeft_toRightOf="@id/fecha_hasta"
+        app:layout_constraintTop_toBottomOf="@id/hora_desde"
+        android:ems="10"
+        android:inputType="time"
+        tools:layout_editor_absoluteX="46dp"
+        tools:layout_editor_absoluteY="604dp"
+        android:onClick="ReservaFragment"
+        tools:ignore="OnClick" />
+
+
+    <Button
+        android:id="@+id/reservar_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="56dp"
+        android:text="@string/reservar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/hora_hasta" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -15,6 +15,7 @@ import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.Navigation;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -125,6 +126,7 @@ public class MapsFragment extends Fragment {
             int position = (int) (marker.getTag());
             Parking pk = mViewModel.getParkings().get(position);
             Toast.makeText(getContext(), pk.getAddress(), Toast.LENGTH_SHORT).show();
+
 
             // BottomSheetModalFragment
 
