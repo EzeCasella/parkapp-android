@@ -28,9 +28,9 @@ public class LoginSignupActivity extends AppCompatActivity {
     public void onStart() {
         super.onStart();
         // Check if user is signed in (non-null) and update UI accordingly.
-        User currentUser = AuthRepository.getCurrentUser();
-        if(currentUser != null){
-            Toast.makeText(LoginSignupActivity.this, currentUser.getEmail(),
+
+        if(AuthRepository.isUserLoggedIn()){
+            Toast.makeText(LoginSignupActivity.this, "Usuario LOGUEADO",
                     Toast.LENGTH_SHORT).show();
             navigateToMainActivity();
         } else {
