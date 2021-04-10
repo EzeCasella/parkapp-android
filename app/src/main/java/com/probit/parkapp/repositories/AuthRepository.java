@@ -29,6 +29,10 @@ public class AuthRepository {
         return currentUser != null;
     }
 
+    public static String getUserId() {
+        return FirebaseAuth.getInstance().getUid();
+    }
+
     public static void signup(String email, String pass,
             Callback.OnSuccess onSuccess,
             Callback.OnFailure onFailure) {
@@ -85,7 +89,7 @@ public class AuthRepository {
     private static void updateCreateUser(User user, Callback.OnSuccess onSuccess, Callback.OnFailure onFailure) {
 
         String userId = user.getId();
-        Map<String, Object> userHash = user.getUserHashForFirestore();
+        Map<String, Object> userHash = user.getHashForFirestore();
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 

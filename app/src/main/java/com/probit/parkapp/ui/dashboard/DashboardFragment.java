@@ -16,17 +16,17 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.google.firebase.Timestamp;
 import com.probit.parkapp.R;
 import com.probit.parkapp.model.Parking;
+import com.probit.parkapp.model.Schedule;
 import com.probit.parkapp.model.User;
 import com.probit.parkapp.repositories.AuthRepository;
 import com.probit.parkapp.repositories.ParkingsRepository;
+import com.probit.parkapp.repositories.SchedulesRepository;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.GregorianCalendar;
 
 public class DashboardFragment extends Fragment {
 
@@ -54,7 +54,9 @@ public class DashboardFragment extends Fragment {
             @Override
             public void onClick(View view) {
 //                createSchedule();
-                logCurrentUser();
+//                logCurrentUser();
+//                createSchedule();
+//                listScheds();
             }
         });
 
@@ -81,26 +83,39 @@ public class DashboardFragment extends Fragment {
     }
 
     private void createSchedule() {
+        Calendar calendar = Calendar.getInstance();
 
-//        SchedulesRepository.createSchedule();
+        Date checkoutDate = calendar.getTime();
+        calendar.add(Calendar.HOUR, -1);
+        Date checkInDate = calendar.getTime();
 
-        Date dt = new Date();
-        //Initialize your Date however you like it.
-        Date date = new Date();
-        Calendar calendar = new GregorianCalendar();
-        calendar.setTime(date);
-        int year = calendar.get(Calendar.YEAR);
-//Add one to month {0 - 11}
-        int month = calendar.get(Calendar.MONTH) + 1;
-        int day = calendar.get(Calendar.DAY_OF_MONTH);
-        Timestamp ts = new Timestamp(dt);
-        Log.i(TAG, dt.toString());
-        Log.i(TAG,ts.toString());
-        Log.i(TAG, "Dia: "+datePicker.getDayOfMonth() + ", Anio: "+ datePicker.getYear());
+        String parkingId = "3fJpMfTlK8MxWoskLdKH"; // La idea es que solamente se creen reservas
+        // con los parkings que ya estan en la base, por eso no se usa este campo ahora, el id se
+        // deberia sacar del mismo objeto almacenado en la base de datos
 
-//        TimePicker tp;
-//        tp.get
+        Parking park = new Parking("SALADITO ", "lat", "long", "por alla por dieció",
+                "phone","carslots","K-ribe","openingHours","notes");
 
-//        Date dtt = new SimpleDateFormat("")
+        Schedule schedule = new Schedule(
+                park,
+                checkInDate,
+                checkoutDate
+        );
+        SchedulesRepository.createSchedule(schedule, data -> {
+            Toast.makeText(requireActivity(), "EXITO CREANDOOO", Toast.LENGTH_LONG).show();
+        }, error -> {
+            Toast.makeText(requireActivity(), error.toString(), Toast.LENGTH_LONG).show();
+        });
+    }
+
+    private void listScheds() {
+        SchedulesRepository.getUserSchedules(data -> {
+            ArrayList<Schedule> scheds = (ArrayList<Schedule>) data;
+            for (Schedule sched : scheds) {
+                Log.i(TAG, sched.getId());
+            }
+        }, error -> {
+            Toast.makeText(requireActivity(), error.toString() , Toast.LENGTH_LONG);
+        });
     }
 }

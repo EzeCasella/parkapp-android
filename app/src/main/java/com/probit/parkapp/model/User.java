@@ -6,15 +6,11 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import java.util.HashMap;
 import java.util.Map;
 
-public class User {
+public class User implements FirestoreEntity {
 
     private String id;
     private String email;
     private String name = "";
-
-    public User(String id) {
-        this.id = id;
-    }
 
     public User(FirebaseUser firebaseUser) {
         if (firebaseUser != null) {
@@ -44,7 +40,8 @@ public class User {
     /*
     * Changing keys here will change attributes in Firestore.
     * */
-    public Map<String, Object> getUserHashForFirestore(){
+    @Override
+    public Map<String, Object> getHashForFirestore(){
         Map<String, Object> userHash = new HashMap<>();
         userHash.put("name", this.getName());
         userHash.put("email", this.getEmail());
