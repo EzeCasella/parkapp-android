@@ -21,20 +21,56 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
-import com.probit.parkapp.LoginSignupActivity;
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.probit.parkapp.R;
+import com.probit.parkapp.model.Parking;
+
+import org.w3c.dom.Text;
 
 import java.util.Calendar;
 
-public class ReservaFragment extends Fragment {
+public class ReservaFragment extends BottomSheetDialogFragment {
 
     private ReservaViewModel mViewModel;
     TextView dateFrom;
-    EditText dateTo;
-    EditText timeFrom;
-    EditText timeTo;
+    TextView dateTo;
+    TextView timeFrom;
+    TextView timeTo;
+
+    TextView tvNombreParking;
+    TextView tvDireccion;
+    TextView tvTelefono;
+    TextView tvHorario;
+    TextView tvLugaresDisponibles;
+    TextView tvNotas;
+
+
+
     DatePickerDialog datePickerDialog;
     TimePicker simpleTimePicker;
+    String nombreParking;
+    String direccion;
+    String telefono;
+    String horario;
+    String lugaresDisponibles;
+    String notas;
+
+    public ReservaFragment(){
+
+    }
+
+    public ReservaFragment(Parking pk){
+        nombreParking      = pk.getName();
+        direccion          = pk.getAddress();
+        telefono           = pk.getPhoneNumber();
+        horario            = pk.getOpeningHours();
+        lugaresDisponibles = pk.getCarSlots();
+        notas              = pk.getNotes();
+
+
+    }
+
+
 
     public static ReservaFragment newInstance() {
         return new ReservaFragment();
@@ -44,18 +80,36 @@ public class ReservaFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
 
+
+
         View view = inflater.inflate(R.layout.reserva_fragment, container, false);
 
         dateFrom = (TextView) view.findViewById(R.id.fecha_desde);
-        dateTo   = (EditText) view.findViewById(R.id.fecha_hasta);
-        timeFrom = (EditText) view.findViewById(R.id.hora_desde);
-        timeTo   = (EditText) view.findViewById(R.id.hora_hasta);
+        dateTo   = (TextView) view.findViewById(R.id.fecha_hasta);
+        timeFrom = (TextView) view.findViewById(R.id.hora_desde);
+        timeTo   = (TextView) view.findViewById(R.id.hora_hasta);
+        tvNombreParking      = (TextView) view.findViewById(R.id.nombre_parking);
+        tvDireccion          = (TextView) view.findViewById(R.id.direccion_parking);
+        tvTelefono           = (TextView) view.findViewById(R.id.telefono);
+        tvHorario            = (TextView) view.findViewById(R.id.horario);
+        tvLugaresDisponibles = (TextView) view.findViewById(R.id.lugares_disponibles);
+        tvNotas              = (TextView) view.findViewById(R.id.notas);
 
-        // perform click event on edit text
+
+
+        tvNombreParking.setText(nombreParking);
+        tvDireccion.setText(direccion);
+        tvTelefono.setText(telefono);
+        tvHorario.setText(horario);
+        tvLugaresDisponibles.setText(lugaresDisponibles);
+        tvNotas.setText(notas);
+
+
+        // perform click event on text view
         dateFrom.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // calender class's instance and get current date , month and year from calender
+                // calendar class's instance and get current date , month and year from calender
                 final Calendar c = Calendar.getInstance();
                 int mYear = c.get(Calendar.YEAR); // current year
                 int mMonth = c.get(Calendar.MONTH); // current month
@@ -147,6 +201,13 @@ public class ReservaFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Toast.makeText(getContext(), "Reservo parking", Toast.LENGTH_SHORT).show();
+
+
+
+
+
+
+
             }
         });
 
