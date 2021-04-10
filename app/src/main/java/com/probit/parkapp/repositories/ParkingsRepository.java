@@ -25,7 +25,6 @@ public class ParkingsRepository {
     private static final String TAG = "ParkingsRepository";
 
      public static void getParkings(Callback.OnSuccess onSuccess, Callback.OnFailure onFailure) {
-        // Access a Cloud Firestore instance from your Activity
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
         db.collection("parkings")
