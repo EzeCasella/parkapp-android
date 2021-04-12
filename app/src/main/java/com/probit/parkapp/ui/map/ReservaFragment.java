@@ -60,6 +60,7 @@ public class ReservaFragment extends BottomSheetDialogFragment {
     String horario;
     String lugaresDisponibles;
     String notas;
+    String precioHora;
     Parking parking;
     Date entrada;
     Date salida;
@@ -76,8 +77,9 @@ public class ReservaFragment extends BottomSheetDialogFragment {
         horario            = pk.getOpeningHours();
         lugaresDisponibles = pk.getCarSlots();
         notas              = pk.getNotes();
+        precioHora         = pk.getHourRate();
     }
-    
+
 
     public static ReservaFragment newInstance() {
         return new ReservaFragment();
@@ -197,12 +199,31 @@ public class ReservaFragment extends BottomSheetDialogFragment {
             }
         });
 
+//        dateFrom.on ;
+//        dateTo    ;
+//        timeFrom ;
+//        timeTo  ;
+
+
+        String entradaAux = String.valueOf(dateFrom.getText());
+        entradaAux = entradaAux + String.valueOf(timeFrom.getText());
+        String salidaAux  = String.valueOf(dateTo.getText());
+        salidaAux = salidaAux + timeTo.getText();
+
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyyHH:mm");
+        try {
+            entrada = sdf.parse(entradaAux);
+            salida  = sdf.parse(salidaAux);
+
+
+        } catch (Exception ex) {
+            Log.i("DateFromatException", ex.getLocalizedMessage());
+        }
 
         Button reservarButton = view.findViewById(R.id.reservar_button);
         reservarButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                Toast.makeText(getContext(), "Reservo parking", Toast.LENGTH_SHORT).show();
 
                 String entradaAux = String.valueOf(dateFrom.getText());
                 entradaAux = entradaAux + String.valueOf(timeFrom.getText());
@@ -271,10 +292,30 @@ public class ReservaFragment extends BottomSheetDialogFragment {
                 .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        createSchedule();
-//                        Toast.makeText(requireActivity(), "SIMULACIÓN DE RESERVA CREADA CON ÉXITO", Toast.LENGTH_LONG).show();
+//                        createSchedule();
+                        Toast.makeText(requireActivity(), "SIMULACIÓN DE RESERVA CREADA CON ÉXITO", Toast.LENGTH_LONG).show();
+                        calcularCosto();
+//                        dismiss(); // COMENTAR CUANDO SE COMENTE EL MENSAJE Y SE DESCOMENTE createSchedule() ya que está dentro de createSchedule
+//
+//
+
+
+
+
                     }
                 }).show();
+    }
+
+    private void calcularCosto() {
+        long millisEntrada = entrada.getTime();
+        long millisSalida  = salida.getTime();
+        long diffMillis = millisSalida - millisEntrada;
+        long tiempoMinutos = diffMillis / 1000 / 60;
+        double precio = Integer.parseInt(precioHora);
+        double costo = precio * tiempoMinutos / 60;
+        String costoTotal = "$ " + costo;
+        Toast.makeText(getContext(), costoTotal, Toast.LENGTH_SHORT).show();
+        dismiss();
     }
 
 
