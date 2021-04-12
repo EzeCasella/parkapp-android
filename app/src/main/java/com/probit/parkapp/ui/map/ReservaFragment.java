@@ -2,8 +2,10 @@ package com.probit.parkapp.ui.map;
 
 import androidx.lifecycle.ViewModelProvider;
 
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -11,6 +13,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,12 +25,18 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
+import com.google.type.DateTime;
 import com.probit.parkapp.R;
 import com.probit.parkapp.model.Parking;
+import com.probit.parkapp.model.Schedule;
+import com.probit.parkapp.repositories.SchedulesRepository;
 
 import org.w3c.dom.Text;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 
 public class ReservaFragment extends BottomSheetDialogFragment {
 
@@ -48,24 +57,37 @@ public class ReservaFragment extends BottomSheetDialogFragment {
 
     DatePickerDialog datePickerDialog;
     TimePicker simpleTimePicker;
+    String parkingId;
     String nombreParking;
     String direccion;
     String telefono;
     String horario;
     String lugaresDisponibles;
     String notas;
+    String latitud;
+    String longitud;
+    String precio;
+
+
+
+    Date entrada;
+    Date salida;
 
     public ReservaFragment(){
 
     }
 
     public ReservaFragment(Parking pk){
+        parkingId          = pk.getId();
         nombreParking      = pk.getName();
         direccion          = pk.getAddress();
         telefono           = pk.getPhoneNumber();
         horario            = pk.getOpeningHours();
         lugaresDisponibles = pk.getCarSlots();
         notas              = pk.getNotes();
+        latitud            = pk.getLatitude();
+        longitud           = pk.getLongitude();
+        precio             = pk.getHourRate();
 
 
     }
@@ -196,15 +218,35 @@ public class ReservaFragment extends BottomSheetDialogFragment {
             }
         });
 
+
+
         Button reservarButton = view.findViewById(R.id.reservar_button);
         reservarButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getContext(), "Reservo parking", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getContext(), "Reservo parking", Toast.LENGTH_SHORT).show();
+
+                String entradaAux = String.valueOf(dateFrom.getText());
+                entradaAux = entradaAux + String.valueOf(timeFrom.getText());
+                String salidaAux  = String.valueOf(dateTo.getText());
+                salidaAux = salidaAux + timeTo.getText();
 
 
+                SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyyHH:mm");
+                try {
+                    entrada = sdf.parse(entradaAux);
+                    salida  = sdf.parse(salidaAux);
+
+                    if(salida.after(entrada)){
+                        confirmaReserva();
+                    }else{
+                        Toast.makeText(getContext(), "La fecha y hora de salida debe ser posterior a la de entrada", Toast.LENGTH_LONG).show();
+                    }
 
 
+                } catch (Exception ex) {
+                    Log.i("DateFromatException", ex.getLocalizedMessage());
+                }
 
 
 
@@ -224,6 +266,49 @@ public class ReservaFragment extends BottomSheetDialogFragment {
         mViewModel = new ViewModelProvider(this).get(ReservaViewModel.class);
         // TODO: Use the ViewModel
 
+    }
+
+
+    private void createSchedule() {
+//        Calendar calendar = Calendar.getInstance();
+//
+//        Date checkoutDate = calendar.getTime();
+//        calendar.add(Calendar.HOUR, -1);
+//        Date checkInDate = calendar.getTime();
+
+        String parkingId = "3fJpMfTlK8MxWoskLdKH"; // La idea es que solamente se creen reservas
+        // con los parkings que ya estan en la base, por eso no se usa este campo ahora, el id se
+        // deberia sacar del mismo objeto almacenado en la base de datos
+
+        Parking park = new Parking(nombreParking, latitud, longitud, direccion,
+                telefono,lugaresDisponibles,precio,horario,notas);
+
+        Schedule schedule = new Schedule(
+                park,
+                entrada,
+                salida
+        );
+        SchedulesRepository.createSchedule(schedule, data -> {
+            Toast.makeText(requireActivity(), "RESERVA CREADA CON ÉXITO", Toast.LENGTH_LONG).show();
+            dismiss();
+        }, error -> {
+            Toast.makeText(requireActivity(), error.toString(), Toast.LENGTH_LONG).show();
+        });
+    }
+
+    private void confirmaReserva() {
+        new AlertDialog.Builder(getContext())
+//                .setIcon(R.drawable.alacran)
+                .setTitle("¿Está seguro que quiere realizar la reserva?")
+                .setCancelable(false)
+                .setNegativeButton(android.R.string.cancel, null)
+                .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+//                        createSchedule();
+                        Toast.makeText(requireActivity(), "SIMULACIÓN DE RESERVA CREADA CON ÉXITO", Toast.LENGTH_LONG).show();
+                    }
+                }).show();
     }
 
 
