@@ -45,7 +45,6 @@ public class ReservaFragment extends BottomSheetDialogFragment {
     TextView dateTo;
     TextView timeFrom;
     TextView timeTo;
-
     TextView tvNombreParking;
     TextView tvDireccion;
     TextView tvTelefono;
@@ -53,23 +52,15 @@ public class ReservaFragment extends BottomSheetDialogFragment {
     TextView tvLugaresDisponibles;
     TextView tvNotas;
 
-
-
     DatePickerDialog datePickerDialog;
-    TimePicker simpleTimePicker;
-    String parkingId;
+    TimePickerDialog timePickerDialog;
     String nombreParking;
     String direccion;
     String telefono;
     String horario;
     String lugaresDisponibles;
     String notas;
-    String latitud;
-    String longitud;
-    String precio;
-
-
-
+    Parking parking;
     Date entrada;
     Date salida;
 
@@ -78,21 +69,15 @@ public class ReservaFragment extends BottomSheetDialogFragment {
     }
 
     public ReservaFragment(Parking pk){
-        parkingId          = pk.getId();
+        parking = pk;
         nombreParking      = pk.getName();
         direccion          = pk.getAddress();
         telefono           = pk.getPhoneNumber();
         horario            = pk.getOpeningHours();
         lugaresDisponibles = pk.getCarSlots();
         notas              = pk.getNotes();
-        latitud            = pk.getLatitude();
-        longitud           = pk.getLongitude();
-        precio             = pk.getHourRate();
-
-
     }
-
-
+    
 
     public static ReservaFragment newInstance() {
         return new ReservaFragment();
@@ -102,10 +87,9 @@ public class ReservaFragment extends BottomSheetDialogFragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
 
-
-
         View view = inflater.inflate(R.layout.reserva_fragment, container, false);
 
+        // Obteniendo los text view
         dateFrom = (TextView) view.findViewById(R.id.fecha_desde);
         dateTo   = (TextView) view.findViewById(R.id.fecha_hasta);
         timeFrom = (TextView) view.findViewById(R.id.hora_desde);
@@ -117,8 +101,7 @@ public class ReservaFragment extends BottomSheetDialogFragment {
         tvLugaresDisponibles = (TextView) view.findViewById(R.id.lugares_disponibles);
         tvNotas              = (TextView) view.findViewById(R.id.notas);
 
-
-
+        // Seteando texto a los text view
         tvNombreParking.setText(nombreParking);
         tvDireccion.setText(direccion);
         tvTelefono.setText(telefono);
@@ -126,8 +109,7 @@ public class ReservaFragment extends BottomSheetDialogFragment {
         tvLugaresDisponibles.setText(lugaresDisponibles);
         tvNotas.setText(notas);
 
-
-        // perform click event on text view
+        // Perform click event on text view
         dateFrom.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -152,7 +134,6 @@ public class ReservaFragment extends BottomSheetDialogFragment {
                 datePickerDialog.show();
             }
         });
-
 
         dateTo.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -185,19 +166,18 @@ public class ReservaFragment extends BottomSheetDialogFragment {
                 Calendar mcurrentTime = Calendar.getInstance();
                 int hour = mcurrentTime.get(Calendar.HOUR_OF_DAY);
                 int minute = mcurrentTime.get(Calendar.MINUTE);
-                TimePickerDialog mTimePicker;
-                mTimePicker = new TimePickerDialog(getContext(), new TimePickerDialog.OnTimeSetListener() {
+//                TimePickerDialog mTimePicker;
+                timePickerDialog = new TimePickerDialog(getContext(), new TimePickerDialog.OnTimeSetListener() {
                     @Override
                     public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
                         timeFrom.setText(selectedHour + ":" + selectedMinute);
                     }
                 }, hour, minute, true);//Yes 24 hour time
-                mTimePicker.setTitle("Seleccione la hora");
-                mTimePicker.show();
+                timePickerDialog.setTitle("Seleccione la hora");
+                timePickerDialog.show();
 
             }
         });
-
 
         timeTo.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -205,19 +185,17 @@ public class ReservaFragment extends BottomSheetDialogFragment {
                 Calendar mcurrentTime = Calendar.getInstance();
                 int hour = mcurrentTime.get(Calendar.HOUR_OF_DAY);
                 int minute = mcurrentTime.get(Calendar.MINUTE);
-                TimePickerDialog mTimePicker;
-                mTimePicker = new TimePickerDialog(getContext(), new TimePickerDialog.OnTimeSetListener() {
+                timePickerDialog = new TimePickerDialog(getContext(), new TimePickerDialog.OnTimeSetListener() {
                     @Override
                     public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
                         timeTo.setText(selectedHour + ":" + selectedMinute);
                     }
                 }, hour, minute, true);//Yes 24 hour time
-                mTimePicker.setTitle("Seleccione la hora");
-                mTimePicker.show();
+                timePickerDialog.setTitle("Seleccione la hora");
+                timePickerDialog.show();
 
             }
         });
-
 
 
         Button reservarButton = view.findViewById(R.id.reservar_button);
@@ -270,21 +248,9 @@ public class ReservaFragment extends BottomSheetDialogFragment {
 
 
     private void createSchedule() {
-//        Calendar calendar = Calendar.getInstance();
-//
-//        Date checkoutDate = calendar.getTime();
-//        calendar.add(Calendar.HOUR, -1);
-//        Date checkInDate = calendar.getTime();
-
-        String parkingId = "3fJpMfTlK8MxWoskLdKH"; // La idea es que solamente se creen reservas
-        // con los parkings que ya estan en la base, por eso no se usa este campo ahora, el id se
-        // deberia sacar del mismo objeto almacenado en la base de datos
-
-        Parking park = new Parking(nombreParking, latitud, longitud, direccion,
-                telefono,lugaresDisponibles,precio,horario,notas);
 
         Schedule schedule = new Schedule(
-                park,
+                parking,
                 entrada,
                 salida
         );
@@ -305,8 +271,8 @@ public class ReservaFragment extends BottomSheetDialogFragment {
                 .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-//                        createSchedule();
-                        Toast.makeText(requireActivity(), "SIMULACIÓN DE RESERVA CREADA CON ÉXITO", Toast.LENGTH_LONG).show();
+                        createSchedule();
+//                        Toast.makeText(requireActivity(), "SIMULACIÓN DE RESERVA CREADA CON ÉXITO", Toast.LENGTH_LONG).show();
                     }
                 }).show();
     }
