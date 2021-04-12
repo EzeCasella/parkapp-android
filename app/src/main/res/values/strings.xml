@@ -3,10 +3,12 @@
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
+    <string name="perfil">Perfil</string>
     <string name="title_activity_login_signup">LoginSignupActivity</string>
     <!-- Strings used for fragments for navigation -->
     <string name="first_fragment_label">First Fragment</string>
     <string name="second_fragment_label">Second Fragment</string>
+    <string name="Vehiculo">Vehiculo</string>
 
     <string name="email">Email</string>
     <string name="password">Password</string>
@@ -15,4 +17,13 @@
     <string name="log_out">Log out</string>
     <string name="dont_have_account">Don\'t have an account? Sign up</string>
     <string name="already_have_account">Already have an account? Log in</string>
+    <string name="SpVehiculos">Spinner Vehiculos</string>
+
+    <!-- Array del spinner de perfil -->
+    <string-array name="Vehiculos">
+        <item>Car</item>
+        <item>Motorcycle</item>
+        <item>Bike</item>
+    </string-array>
+
 </resources>

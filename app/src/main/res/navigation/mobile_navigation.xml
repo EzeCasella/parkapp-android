@@ -19,7 +19,7 @@
 
     <fragment
         android:id="@+id/navigation_notifications"
-        android:name="com.probit.parkapp.ui.notifications.NotificationsFragment"
-        android:label="@string/title_notifications"
-        tools:layout="@layout/fragment_notifications" />
+        android:name="com.probit.parkapp.PerfilActivity"
+        android:label="@string/perfil"
+        tools:layout="@layout/fragment_profile" />
 </navigation>
