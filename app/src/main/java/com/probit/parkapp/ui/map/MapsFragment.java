@@ -57,6 +57,7 @@ public class MapsFragment extends Fragment {
 
         mViewModel.getParkingsLiveData().observe(getViewLifecycleOwner(), this::addMarkersAndMove);
 
+
         return root;
     }
 

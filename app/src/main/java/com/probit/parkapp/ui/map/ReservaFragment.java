@@ -51,6 +51,7 @@ public class ReservaFragment extends BottomSheetDialogFragment {
     TextView tvHorario;
     TextView tvLugaresDisponibles;
     TextView tvNotas;
+    TextView tvCosto;
 
     DatePickerDialog datePickerDialog;
     TimePickerDialog timePickerDialog;
@@ -64,6 +65,9 @@ public class ReservaFragment extends BottomSheetDialogFragment {
     Parking parking;
     Date entrada;
     Date salida;
+
+    long millisEntrada;
+    long millisSalida;
 
     public ReservaFragment(){
 
@@ -102,6 +106,7 @@ public class ReservaFragment extends BottomSheetDialogFragment {
         tvHorario            = (TextView) view.findViewById(R.id.horario);
         tvLugaresDisponibles = (TextView) view.findViewById(R.id.lugares_disponibles);
         tvNotas              = (TextView) view.findViewById(R.id.notas);
+        tvCosto              = (TextView) view.findViewById(R.id.costo);
 
         // Seteando texto a los text view
         tvNombreParking.setText(nombreParking);
@@ -130,6 +135,7 @@ public class ReservaFragment extends BottomSheetDialogFragment {
                                 // set day of month , month and year value in the edit text
                                 dateFrom.setText(dayOfMonth + "/"
                                         + (monthOfYear + 1) + "/" + year);
+                                calcularCosto();
 
                             }
                         }, mYear, mMonth, mDay);
@@ -155,6 +161,7 @@ public class ReservaFragment extends BottomSheetDialogFragment {
                                 // set day of month , month and year value in the edit text
                                 dateTo.setText(dayOfMonth + "/"
                                         + (monthOfYear + 1) + "/" + year);
+                                calcularCosto();
 
                             }
                         }, mYear, mMonth, mDay);
@@ -173,6 +180,7 @@ public class ReservaFragment extends BottomSheetDialogFragment {
                     @Override
                     public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
                         timeFrom.setText(selectedHour + ":" + selectedMinute);
+                        calcularCosto();
                     }
                 }, hour, minute, true);//Yes 24 hour time
                 timePickerDialog.setTitle("Seleccione la hora");
@@ -191,7 +199,8 @@ public class ReservaFragment extends BottomSheetDialogFragment {
                     @Override
                     public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
                         timeTo.setText(selectedHour + ":" + selectedMinute);
-                    }
+                        calcularCosto();
+                                          }
                 }, hour, minute, true);//Yes 24 hour time
                 timePickerDialog.setTitle("Seleccione la hora");
                 timePickerDialog.show();
@@ -199,56 +208,30 @@ public class ReservaFragment extends BottomSheetDialogFragment {
             }
         });
 
-//        dateFrom.on ;
-//        dateTo    ;
-//        timeFrom ;
-//        timeTo  ;
 
-
-        String entradaAux = String.valueOf(dateFrom.getText());
-        entradaAux = entradaAux + String.valueOf(timeFrom.getText());
-        String salidaAux  = String.valueOf(dateTo.getText());
-        salidaAux = salidaAux + timeTo.getText();
-
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyyHH:mm");
-        try {
-            entrada = sdf.parse(entradaAux);
-            salida  = sdf.parse(salidaAux);
-
-
-        } catch (Exception ex) {
-            Log.i("DateFromatException", ex.getLocalizedMessage());
-        }
+//        String entradaAux = String.valueOf(dateFrom.getText());
+//        entradaAux = entradaAux + String.valueOf(timeFrom.getText());
+//        String salidaAux  = String.valueOf(dateTo.getText());
+//        salidaAux = salidaAux + timeTo.getText();
+//
+//        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyyHH:mm");
+//        try {
+//            entrada = sdf.parse(entradaAux);
+//            salida  = sdf.parse(salidaAux);
+//
+//            millisEntrada = entrada.getTime();
+//            millisSalida  = salida.getTime();
+//
+//        } catch (Exception ex) {
+//            Log.i("DateFromatException", ex.getLocalizedMessage());
+//        }
 
         Button reservarButton = view.findViewById(R.id.reservar_button);
         reservarButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                String entradaAux = String.valueOf(dateFrom.getText());
-                entradaAux = entradaAux + String.valueOf(timeFrom.getText());
-                String salidaAux  = String.valueOf(dateTo.getText());
-                salidaAux = salidaAux + timeTo.getText();
-
-
-                SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyyHH:mm");
-                try {
-                    entrada = sdf.parse(entradaAux);
-                    salida  = sdf.parse(salidaAux);
-
-                    if(salida.after(entrada)){
-                        confirmaReserva();
-                    }else{
-                        Toast.makeText(getContext(), "La fecha y hora de salida debe ser posterior a la de entrada", Toast.LENGTH_LONG).show();
-                    }
-
-
-                } catch (Exception ex) {
-                    Log.i("DateFromatException", ex.getLocalizedMessage());
-                }
-
-
-
+                confirmaReserva();
             }
         });
 
@@ -294,8 +277,7 @@ public class ReservaFragment extends BottomSheetDialogFragment {
                     public void onClick(DialogInterface dialog, int which) {
 //                        createSchedule();
                         Toast.makeText(requireActivity(), "SIMULACIÓN DE RESERVA CREADA CON ÉXITO", Toast.LENGTH_LONG).show();
-                        calcularCosto();
-//                        dismiss(); // COMENTAR CUANDO SE COMENTE EL MENSAJE Y SE DESCOMENTE createSchedule() ya que está dentro de createSchedule
+                        dismiss(); // COMENTAR CUANDO SE COMENTE EL MENSAJE Y SE DESCOMENTE createSchedule() ya que está dentro de createSchedule
 //
 //
 
@@ -307,15 +289,51 @@ public class ReservaFragment extends BottomSheetDialogFragment {
     }
 
     private void calcularCosto() {
-        long millisEntrada = entrada.getTime();
-        long millisSalida  = salida.getTime();
-        long diffMillis = millisSalida - millisEntrada;
-        long tiempoMinutos = diffMillis / 1000 / 60;
-        double precio = Integer.parseInt(precioHora);
-        double costo = precio * tiempoMinutos / 60;
-        String costoTotal = "$ " + costo;
-        Toast.makeText(getContext(), costoTotal, Toast.LENGTH_SHORT).show();
-        dismiss();
+
+
+
+        String entradaAux = String.valueOf(dateFrom.getText());
+        entradaAux = entradaAux + String.valueOf(timeFrom.getText());
+        String salidaAux  = String.valueOf(dateTo.getText());
+        salidaAux = salidaAux + timeTo.getText();
+
+
+
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyyHH:mm");
+        try {
+            entrada = sdf.parse(entradaAux);
+            salida  = sdf.parse(salidaAux);
+
+            millisEntrada = entrada.getTime();
+            millisSalida  = salida.getTime();
+
+
+            long diffMillis = millisSalida - millisEntrada;
+            long tiempoMinutos = diffMillis / 1000 / 60;
+            double precio = Integer.parseInt(precioHora);
+            double costo = precio * tiempoMinutos / 60;
+            String costoTotal = "$ " + costo;
+
+            if(salida.after(entrada)){
+                tvCosto.setText(costoTotal);
+            }else{
+                tvCosto.setText("-");
+                Toast.makeText(getContext(), "La fecha y hora de salida debe ser posterior a la de entrada", Toast.LENGTH_LONG).show();
+            }
+
+        } catch (Exception ex) {
+            Log.i("DateFromatException", ex.getLocalizedMessage());
+            tvCosto.setText("-");
+        }
+
+
+//        long millisEntrada = entrada.getTime();
+//        long millisSalida  = salida.getTime();
+
+
+
+//        Toast.makeText(getContext(), costoTotal, Toast.LENGTH_SHORT).show();
+//        dismiss();
     }
 
 
