@@ -1,5 +1,7 @@
 package com.probit.parkapp.model;
 
+import android.widget.Toast;
+
 import com.google.firebase.Timestamp;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.probit.parkapp.repositories.AuthRepository;
@@ -52,6 +54,14 @@ public class Schedule implements FirestoreEntity {
         /*
          * TODO: Implementar en base a checkinDate, checkoutDate y hourRate
          * */
+
+        long millisEntrada = checkinDate.getTime();
+        long millisSalida  = checkoutDate.getTime();
+        long diffMillis = millisSalida - millisEntrada;
+        long tiempoMinutos = diffMillis / 1000 / 60;
+        float precio = Integer.parseInt(parkingHourRate);
+        float cost = precio * tiempoMinutos / 60;
+
         return cost;
     }
 

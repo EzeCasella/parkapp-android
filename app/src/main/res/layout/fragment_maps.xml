@@ -9,4 +9,8 @@
     android:layout_marginBottom="50dp"
     android:layout_marginTop="0dp"
     android:visibility="visible"
-    tools:context=".ui.map.MapsFragment" />
+    tools:context=".ui.map.MapsFragment" >
+
+
+
+</fragment>

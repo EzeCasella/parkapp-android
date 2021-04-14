@@ -2,6 +2,7 @@ package com.probit.parkapp.ui.map;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -12,9 +13,12 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.Navigation;
+import androidx.navigation.fragment.NavHostFragment;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -24,8 +28,11 @@ import com.google.android.gms.maps.UiSettings;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.material.bottomsheet.BottomSheetDialog;
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.probit.parkapp.R;
 import com.probit.parkapp.model.Parking;
+import com.probit.parkapp.ui.SignupFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,6 +56,7 @@ public class MapsFragment extends Fragment {
         View root = inflater.inflate(R.layout.fragment_maps, container, false);
 
         mViewModel.getParkingsLiveData().observe(getViewLifecycleOwner(), this::addMarkersAndMove);
+
 
         return root;
     }
@@ -124,11 +132,14 @@ public class MapsFragment extends Fragment {
         public boolean onMarkerClick(Marker marker) {
             int position = (int) (marker.getTag());
             Parking pk = mViewModel.getParkings().get(position);
-            Toast.makeText(getContext(), pk.getAddress(), Toast.LENGTH_SHORT).show();
+//            Toast.makeText(getContext(), pk.getAddress(), Toast.LENGTH_SHORT).show();
 
-            // BottomSheetModalFragment
+//            NavHostFragment.findNavController(MapsFragment.this).navigate(R.id.action_navigation_map_to_reserva_fragment);
 
-            return false;
+            ReservaFragment bottomSheet = new ReservaFragment(pk);
+            bottomSheet.show(getActivity().getSupportFragmentManager(), "InformacionParking");
+
+            return true;
         }
 
     };
