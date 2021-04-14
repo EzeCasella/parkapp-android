@@ -19,4 +19,9 @@
     <string name="log_out">Log out</string>
     <string name="dont_have_account">Don\'t have an account? Sign up</string>
     <string name="already_have_account">Already have an account? Log in</string>
+
+<!--    API ERRORS  -->
+    <string name="api_error_campos_vacios">Debe completar los campos para poder iniciar sesión.</string>
+    <string name="api_error_error_autenticacion">Error de autenticación.</string>
+    <string name="api_error_fallo_signup">Falló el signup.</string>
 </resources>
