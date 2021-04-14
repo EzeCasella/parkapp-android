@@ -19,6 +19,7 @@
     <string name="log_out">Log out</string>
     <string name="dont_have_account">Don\'t have an account? Sign up</string>
     <string name="already_have_account">Already have an account? Log in</string>
+    <string name="reservar">Reservar</string>
 
 <!--    API ERRORS  -->
     <string name="api_error_campos_vacios">Debe completar los campos para poder iniciar sesión.</string>
