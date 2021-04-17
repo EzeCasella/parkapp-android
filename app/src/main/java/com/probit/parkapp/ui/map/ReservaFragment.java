@@ -6,6 +6,8 @@ import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.DialogInterface;
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -52,6 +54,7 @@ public class ReservaFragment extends BottomSheetDialogFragment {
     TextView tvLugaresDisponibles;
     TextView tvNotas;
     TextView tvCosto;
+    TextView tvCostoHora;
 
     DatePickerDialog datePickerDialog;
     TimePickerDialog timePickerDialog;
@@ -65,6 +68,8 @@ public class ReservaFragment extends BottomSheetDialogFragment {
     Parking parking;
     Date entrada;
     Date salida;
+    Boolean datosOk = false;
+
 
     long millisEntrada;
     long millisSalida;
@@ -107,14 +112,18 @@ public class ReservaFragment extends BottomSheetDialogFragment {
         tvLugaresDisponibles = (TextView) view.findViewById(R.id.lugares_disponibles);
         tvNotas              = (TextView) view.findViewById(R.id.notas);
         tvCosto              = (TextView) view.findViewById(R.id.costo);
+        tvCostoHora          = (TextView) view.findViewById(R.id.costo_hora);
 
         // Seteando texto a los text view
         tvNombreParking.setText(nombreParking);
+        tvNombreParking.setTextSize(16);
+        tvNombreParking.setAllCaps(true);
         tvDireccion.setText(direccion);
         tvTelefono.setText(telefono);
         tvHorario.setText(horario);
         tvLugaresDisponibles.setText(lugaresDisponibles);
         tvNotas.setText(notas);
+        tvCostoHora.setText("$ " + precioHora);
 
         // Perform click event on text view
         dateFrom.setOnClickListener(new View.OnClickListener() {
@@ -231,7 +240,21 @@ public class ReservaFragment extends BottomSheetDialogFragment {
             @Override
             public void onClick(View view) {
 
-                confirmaReserva();
+                String fechaDesde = String.valueOf(dateFrom.getText());
+                String fechaHasta = String.valueOf(dateTo.getText());
+                String horaDesde  = String.valueOf(timeFrom.getText());
+                String horaHasta  = String.valueOf(timeTo.getText());
+
+                if (fechaDesde.isEmpty() || fechaHasta.isEmpty() || horaDesde.isEmpty() || horaHasta.isEmpty()) {
+                    Toast.makeText(getContext(), "Debe ingresar el horario completo para poder reservar", Toast.LENGTH_SHORT).show();
+                }else{
+                    if (datosOk == true) {
+                        confirmaReserva();
+                    }else{
+                        calcularCosto();
+                    }
+                }
+
             }
         });
 
@@ -268,21 +291,16 @@ public class ReservaFragment extends BottomSheetDialogFragment {
 
     private void confirmaReserva() {
         new AlertDialog.Builder(getContext())
-//                .setIcon(R.drawable.alacran)
+                .setIcon(R.drawable.ic_baseline_warning_amber_24)
                 .setTitle("¿Está seguro que quiere realizar la reserva?")
                 .setCancelable(false)
                 .setNegativeButton(android.R.string.cancel, null)
                 .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-//                        createSchedule();
-                        Toast.makeText(requireActivity(), "SIMULACIÓN DE RESERVA CREADA CON ÉXITO", Toast.LENGTH_LONG).show();
-                        dismiss(); // COMENTAR CUANDO SE COMENTE EL MENSAJE Y SE DESCOMENTE createSchedule() ya que está dentro de createSchedule
-//
-//
-
-
-
+//                            createSchedule();
+                            Toast.makeText(requireActivity(), "SIMULACIÓN DE RESERVA CREADA CON ÉXITO", Toast.LENGTH_LONG).show();
+                            dismiss(); // COMENTAR CUANDO SE COMENTE EL MENSAJE Y SE DESCOMENTE createSchedule() ya que está dentro de createSchedule
 
                     }
                 }).show();
@@ -304,36 +322,45 @@ public class ReservaFragment extends BottomSheetDialogFragment {
             entrada = sdf.parse(entradaAux);
             salida  = sdf.parse(salidaAux);
 
+
+
+
             millisEntrada = entrada.getTime();
             millisSalida  = salida.getTime();
 
 
-            long diffMillis = millisSalida - millisEntrada;
-            long tiempoMinutos = diffMillis / 1000 / 60;
-            double precio = Integer.parseInt(precioHora);
-            double costo = precio * tiempoMinutos / 60;
-            String costoTotal = "$ " + costo;
+            Date date = new Date();
+            long now = date.getTime();
 
-            if(salida.after(entrada)){
-                tvCosto.setText(costoTotal);
-            }else{
-                tvCosto.setText("-");
-                Toast.makeText(getContext(), "La fecha y hora de salida debe ser posterior a la de entrada", Toast.LENGTH_LONG).show();
+            if(millisEntrada < now){
+                Toast.makeText(requireActivity(), "La fecha y hora de entrada debe ser mayor a la actual", Toast.LENGTH_LONG).show();
+                tvCosto.setText("");
+                tvCosto.setBackgroundColor(Color.parseColor("#ffffff"));
+                datosOk = false;
+                return;
+            }else {
+
+                long diffMillis = millisSalida - millisEntrada;
+                long tiempoMinutos = diffMillis / 1000 / 60;
+                double precio = Integer.parseInt(precioHora);
+                double costo = precio * tiempoMinutos / 60;
+                String costoTotal = "$ " + Math.round(costo * 100.0) / 100.0;
+
+                if (salida.after(entrada)) {
+                    tvCosto.setText(costoTotal);
+                    //                tvCosto.setBackgroundResource(R.drawable.rounded_corner);
+                    tvCosto.setBackgroundColor(Color.parseColor("#0bcce6"));
+                    datosOk = true;
+                } else {
+                    datosOk = false;
+                    Toast.makeText(getContext(), "La fecha y hora de salida debe ser posterior a la de entrada", Toast.LENGTH_LONG).show();
+                }
             }
 
         } catch (Exception ex) {
             Log.i("DateFromatException", ex.getLocalizedMessage());
-            tvCosto.setText("-");
         }
 
-
-//        long millisEntrada = entrada.getTime();
-//        long millisSalida  = salida.getTime();
-
-
-
-//        Toast.makeText(getContext(), costoTotal, Toast.LENGTH_SHORT).show();
-//        dismiss();
     }
 
 
