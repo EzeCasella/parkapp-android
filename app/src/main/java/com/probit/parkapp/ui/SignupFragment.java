@@ -56,7 +56,7 @@ public class SignupFragment extends Fragment {
                         userEmail.getText().toString(),
                         userPass.getText().toString(),
                         data -> ((LoginSignupActivity)requireActivity()).navigateToMainActivity(), // OnSuccess
-                        error -> Toast.makeText(requireActivity(), error.toString() , Toast.LENGTH_LONG)
+                        errorStringId -> Toast.makeText(requireActivity(), getString((Integer) errorStringId), Toast.LENGTH_SHORT).show()
                 );
 
             }

@@ -72,7 +72,7 @@ public class DashboardFragment extends Fragment {
             for (Parking park : parkings) {
                 Log.i(TAG, park.getName());
             }
-        }, error -> Toast.makeText(requireActivity(), error.toString() , Toast.LENGTH_LONG));
+        }, error -> Toast.makeText(requireActivity(), error.toString() , Toast.LENGTH_LONG).show());
     }
 
     private void logCurrentUser() {
@@ -115,7 +115,7 @@ public class DashboardFragment extends Fragment {
                 Log.i(TAG, sched.getId());
             }
         }, error -> {
-            Toast.makeText(requireActivity(), error.toString() , Toast.LENGTH_LONG);
+            Toast.makeText(requireActivity(), error.toString() , Toast.LENGTH_LONG).show();
         });
     }
 }
