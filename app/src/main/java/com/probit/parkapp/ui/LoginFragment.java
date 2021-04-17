@@ -18,6 +18,9 @@ import com.probit.parkapp.repositories.AuthRepository;
 
 public class LoginFragment extends Fragment {
 
+    private static final String TAG = "LoginFragment";
+
+
     EditText userEmail;
     EditText userPass;
 
@@ -54,7 +57,7 @@ public class LoginFragment extends Fragment {
 
                 AuthRepository.login(userEmail.getText().toString(),userPass.getText().toString(),
                         _data -> ((LoginSignupActivity)requireActivity()).navigateToMainActivity(),
-                        error -> Toast.makeText(requireActivity(), error.toString() , Toast.LENGTH_LONG)
+                        errorStringId -> Toast.makeText(requireActivity(), getString((Integer) errorStringId), Toast.LENGTH_SHORT).show()
                 );
 
             }
