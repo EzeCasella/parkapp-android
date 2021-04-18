@@ -8,135 +8,135 @@
     android:background="@color/gray"
     tools:context="com.probit.parkapp.MainActivity">
 
-    <LinearLayout
-        android:id="@+id/linearLayout2"
-        android:layout_width="match_parent"
-        android:layout_height="320dp"
-        android:background="@drawable/gradientbackground"
-        android:orientation="vertical"
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="387dp"
+        android:layout_height="145dp"
+        android:background="@drawable/fondo_perfil"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent" />
 
-        <ImageView
-            android:layout_width="150dp"
-            android:layout_height="150dp"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="45dp"
-            android:src="@drawable/logo_parkapp" />
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/circleImageView"
+        android:layout_width="95dp"
+        android:layout_height="86dp"
+        android:layout_marginTop="28dp"
+        android:src="@drawable/perfilmio"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.089"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="30dp"
-            android:text="Nombre Apellido"
-            android:textColor="#fafafa"
-            android:textSize="21sp"
-            android:textStyle="bold" />
-
-    </LinearLayout>
+    <TextView
+        android:id="@+id/nombreperfil"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:text="Nombre Apellido"
+        android:textColor="#fafafa"
+        android:textSize="19sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView"
+        app:layout_constraintEnd_toEndOf="@+id/imageView"
+        app:layout_constraintHorizontal_bias="0.27"
+        app:layout_constraintStart_toEndOf="@+id/circleImageView"
+        app:layout_constraintTop_toTopOf="@+id/imageView"
+        app:layout_constraintVertical_bias="0.443" />
 
     <ImageView
         android:id="@+id/image_mail"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
+        android:layout_width="32dp"
+        android:layout_height="29dp"
+        android:layout_marginStart="64dp"
         android:src="@drawable/ic_baseline_email_24"
-        app:layout_constraintStart_toStartOf="@+id/button_save"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout2" />
+        app:layout_constraintBottom_toBottomOf="@+id/button_save"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/circleImageView"
+        app:layout_constraintVertical_bias="0.252" />
 
     <ImageView
         android:id="@+id/image_phone"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="98dp"
+        android:layout_width="32dp"
+        android:layout_height="31dp"
+        android:layout_marginStart="64dp"
         android:src="@drawable/ic_baseline_contact_phone_24"
-        app:layout_constraintStart_toStartOf="@+id/button_save"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout2" />
+        app:layout_constraintBottom_toBottomOf="@+id/button_save"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/circleImageView"
+        app:layout_constraintVertical_bias="0.474" />
 
     <ImageView
         android:id="@+id/image_car"
-        android:layout_width="20dp"
-        android:layout_height="37dp"
-        android:layout_marginTop="157dp"
+        android:layout_width="32dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="64dp"
         android:src="@drawable/ic_baseline_directions_car_24"
-        app:layout_constraintStart_toStartOf="@+id/button_save"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout2" />
-
-    <ImageView
-        android:id="@+id/image_documento"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="240dp"
-        android:src="@drawable/ic_baseline_payment_24"
-        app:layout_constraintStart_toStartOf="@+id/button_save"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout2" />
-
-
-    <Button
-        android:id="@+id/button_logout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/buttonstyleithgradient"
-        android:text="Logout"
-        android:textColor="@color/white"
-        app:backgroundTint="@color/startblue"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/button_save"
-        app:layout_constraintTop_toBottomOf="@+id/textDocumento" />
-
-    <Button
-        android:id="@+id/button_save"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/buttonstyleithgradient"
-        android:text="Save"
-        android:textColor="@color/white"
-        app:backgroundTint="@color/startblue"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/image_documento"
-        tools:layout_editor_absoluteX="70dp"
-        tools:ignore="MissingConstraints" />
+        app:layout_constraintBottom_toBottomOf="@+id/button_save"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/circleImageView"
+        app:layout_constraintVertical_bias="0.729" />
 
     <TextView
         android:id="@+id/textMail"
         android:layout_width="185dp"
         android:layout_height="25dp"
+        android:layout_marginStart="64dp"
         android:text="Email adress"
-        app:layout_constraintBottom_toBottomOf="@+id/image_mail"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="@+id/button_logout"
         app:layout_constraintStart_toEndOf="@+id/image_mail"
-        app:layout_constraintTop_toTopOf="@+id/image_mail" />
+        app:layout_constraintTop_toBottomOf="@+id/nombreperfil"
+        app:layout_constraintVertical_bias="0.341" />
 
     <TextView
         android:id="@+id/textContact"
         android:layout_width="185dp"
         android:layout_height="25dp"
+        android:layout_marginStart="64dp"
         android:text="number phone"
-        app:layout_constraintBottom_toBottomOf="@+id/image_phone"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="@+id/button_logout"
         app:layout_constraintStart_toEndOf="@+id/image_phone"
-        app:layout_constraintTop_toTopOf="@+id/image_phone" />
-
-    <TextView
-        android:id="@+id/textDocumento"
-        android:layout_width="185dp"
-        android:layout_height="25dp"
-        android:text="document"
-        app:layout_constraintBottom_toBottomOf="@+id/image_documento"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/image_documento"
-        app:layout_constraintTop_toTopOf="@+id/image_documento" />
+        app:layout_constraintTop_toBottomOf="@+id/nombreperfil"
+        app:layout_constraintVertical_bias="0.539" />
 
     <Spinner
         android:id="@+id/spinner_Vehiculo"
         android:layout_width="185dp"
         android:layout_height="25dp"
-        app:layout_constraintBottom_toBottomOf="@+id/image_car"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginStart="64dp"
+        android:entries="@array/Vehiculos"
+        app:layout_constraintBottom_toBottomOf="@+id/button_logout"
         app:layout_constraintStart_toEndOf="@+id/image_car"
-        app:layout_constraintTop_toTopOf="@+id/image_car" />
+        app:layout_constraintTop_toBottomOf="@+id/nombreperfil"
+        app:layout_constraintVertical_bias="0.742" />
+
+    <Button
+        android:id="@+id/button_logout"
+        android:layout_width="99dp"
+        android:layout_height="36dp"
+        android:layout_marginTop="340dp"
+        android:background="@drawable/buttonstyleithgradient"
+        android:text="Log out"
+        android:textColor="@color/white"
+        app:backgroundTint="@color/blue2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.401"
+        app:layout_constraintStart_toEndOf="@+id/button_save"
+        app:layout_constraintTop_toBottomOf="@+id/nombreperfil" />
+
+    <Button
+        android:id="@+id/button_save"
+        android:layout_width="93dp"
+        android:layout_height="37dp"
+        android:layout_marginTop="304dp"
+        android:background="@drawable/buttonstyleithgradient"
+        android:text="Save"
+        android:textColor="@color/white"
+        app:backgroundTint="@color/blue2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.185"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/circleImageView" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
