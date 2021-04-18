@@ -79,13 +79,12 @@ public class MapsFragment extends Fragment {
         @Override
         public void onMapReady(GoogleMap _googleMap) {
             googleMap = _googleMap;
-
             googleMap.setOnMarkerClickListener(onMarkerClickListener);
             googleMap.setOnInfoWindowClickListener(onInfoWindowClickListener);
             UiSettings uiSettings = googleMap.getUiSettings();
             uiSettings.setZoomControlsEnabled(true);
             uiSettings.setMyLocationButtonEnabled(true);
-            uiSettings.setMapToolbarEnabled(false);
+            uiSettings.setMapToolbarEnabled(true);
 
             mViewModel.onMapReady();
 
@@ -114,8 +113,8 @@ public class MapsFragment extends Fragment {
             String permiso1 = Manifest.permission.ACCESS_FINE_LOCATION;
             String permiso2 = Manifest.permission.ACCESS_COARSE_LOCATION;
             List<String> permissionlist = new ArrayList<>();
-            permissionlist.add(permiso1);
             permissionlist.add(permiso2);
+            permissionlist.add(permiso1);
 
             ActivityCompat.requestPermissions(getActivity(), permissionlist.toArray(new String[permissionlist.size()]), LOCATION_PERMISSION_REQUEST_CODE);
 
@@ -132,14 +131,11 @@ public class MapsFragment extends Fragment {
         public boolean onMarkerClick(Marker marker) {
             int position = (int) (marker.getTag());
             Parking pk = mViewModel.getParkings().get(position);
-//            Toast.makeText(getContext(), pk.getAddress(), Toast.LENGTH_SHORT).show();
-
-//            NavHostFragment.findNavController(MapsFragment.this).navigate(R.id.action_navigation_map_to_reserva_fragment);
 
             ReservaFragment bottomSheet = new ReservaFragment(pk);
             bottomSheet.show(getActivity().getSupportFragmentManager(), "InformacionParking");
 
-            return true;
+            return false;
         }
 
     };
@@ -147,7 +143,7 @@ public class MapsFragment extends Fragment {
     GoogleMap.OnInfoWindowClickListener onInfoWindowClickListener = new GoogleMap.OnInfoWindowClickListener() {
         @Override
         public void onInfoWindowClick(Marker marker) {
-            Toast.makeText(getContext(), "ENTRO A RESERVAR" , Toast.LENGTH_SHORT).show();
+
         }
     };
 
@@ -158,7 +154,6 @@ public class MapsFragment extends Fragment {
             case LOCATION_PERMISSION_REQUEST_CODE:
                 if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     // Permission Granted
-//                    googleMap.setMyLocationEnabled(true);
                     enableLocation();
                 } else {
                     // Permission Denied
