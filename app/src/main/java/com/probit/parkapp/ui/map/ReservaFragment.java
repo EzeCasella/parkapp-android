@@ -218,23 +218,6 @@ public class ReservaFragment extends BottomSheetDialogFragment {
         });
 
 
-//        String entradaAux = String.valueOf(dateFrom.getText());
-//        entradaAux = entradaAux + String.valueOf(timeFrom.getText());
-//        String salidaAux  = String.valueOf(dateTo.getText());
-//        salidaAux = salidaAux + timeTo.getText();
-//
-//        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyyHH:mm");
-//        try {
-//            entrada = sdf.parse(entradaAux);
-//            salida  = sdf.parse(salidaAux);
-//
-//            millisEntrada = entrada.getTime();
-//            millisSalida  = salida.getTime();
-//
-//        } catch (Exception ex) {
-//            Log.i("DateFromatException", ex.getLocalizedMessage());
-//        }
-
         Button reservarButton = view.findViewById(R.id.reservar_button);
         reservarButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -257,11 +240,8 @@ public class ReservaFragment extends BottomSheetDialogFragment {
 
             }
         });
-
-
+        
         return view;
-
-
 
     }
 

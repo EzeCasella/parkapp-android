@@ -3,11 +3,19 @@ package com.probit.parkapp.ui.map;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.ActivityNotFoundException;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.location.Address;
+import android.location.Geocoder;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.SearchView;
 import android.widget.Toast;
 
 
@@ -15,6 +23,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
@@ -30,10 +39,12 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.probit.parkapp.R;
 import com.probit.parkapp.model.Parking;
 import com.probit.parkapp.ui.SignupFragment;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -42,9 +53,10 @@ public class MapsFragment extends Fragment {
 
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 1;
     SupportMapFragment mapFragment;
+    SearchView searchView;
+    FloatingActionButton waze;
     private MapsViewModel mViewModel;
     private GoogleMap googleMap;
-//    UiSettings uiSettings = googleMap.getUiSettings();
 
     @Nullable
     @Override
@@ -56,7 +68,37 @@ public class MapsFragment extends Fragment {
         View root = inflater.inflate(R.layout.fragment_maps, container, false);
 
         mViewModel.getParkingsLiveData().observe(getViewLifecycleOwner(), this::addMarkersAndMove);
+        waze =  root.findViewById(R.id.waze_button);
+        searchView  = (SearchView) root.findViewById(R.id.search_view);
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                String location = searchView.getQuery().toString();
+                List<Address> addressList = null;
 
+                if (location != null || !location.equals("")){
+                    Geocoder geocoder = new Geocoder(getContext());
+                    try {
+                        addressList = geocoder.getFromLocationName(location, 1000);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    Address address = addressList.get(0);
+                    LatLng latLng = new LatLng(address.getLatitude(), address.getLongitude());
+//                    googleMap.addMarker(new MarkerOptions().position(latLng).title(location));
+                    googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 13));
+
+                }
+
+
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return false;
+            }
+        });
 
         return root;
     }
@@ -71,6 +113,7 @@ public class MapsFragment extends Fragment {
             mapFragment.getMapAsync(callback);
 
         }
+
     }
 
 
@@ -134,6 +177,29 @@ public class MapsFragment extends Fragment {
 
             ReservaFragment bottomSheet = new ReservaFragment(pk);
             bottomSheet.show(getActivity().getSupportFragmentManager(), "InformacionParking");
+
+
+
+            waze.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    try
+                    {
+                        // Launch Waze to look for selected parking:
+                        String url = "https://waze.com/ul?ll=" + pk.getLatitude() + "," + pk.getLongitude() + "&z=10";
+                        Intent intent = new Intent( Intent.ACTION_VIEW, Uri.parse( url ) );
+                        startActivity( intent );
+                    }
+                    catch ( ActivityNotFoundException ex  )
+                    {
+                        // If Waze is not installed, open it in Google Play:
+                        Intent intent = new Intent( Intent.ACTION_VIEW, Uri.parse( "market://details?id=com.waze" ) );
+                        startActivity(intent);
+                    }
+                }
+            });
+
+
 
             return false;
         }
