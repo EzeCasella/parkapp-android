@@ -20,6 +20,14 @@
     <string name="dont_have_account">Don\'t have an account? Sign up</string>
     <string name="already_have_account">Already have an account? Log in</string>
     <string name="reservar">Reservar</string>
+    <string name="parking_colon">Parking:</string>
+    <string name="checkin_colon">Checkin:</string>
+    <string name="checkout_colon">Checkout:</string>
+    <string name="dolar_sign_colon">$:</string>
+
+<!--    SCHEDULES LIST CONSTANTS-->
+    <string name="reservas_corrientes_colon">RESERVAS CORRIENTES:</string>
+    <string name="reservas_pasadas_colon">RESERVAS PASADAS:</string>
 
 <!--    API ERRORS  -->
     <string name="api_error_campos_vacios">Debe completar los campos para poder iniciar sesión.</string>
