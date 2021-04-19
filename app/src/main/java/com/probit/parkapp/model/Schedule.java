@@ -63,6 +63,9 @@ public class Schedule implements FirestoreEntity, SchedulesListItem {
         float precio = Float.parseFloat(parkingHourRate);
         float cost = precio * tiempoMinutos / 60;
 
+        // Redondea a dos decimales
+        cost = (float) (Math.round(cost * 100.0) / 100.0);
+
         return cost;
     }
 
