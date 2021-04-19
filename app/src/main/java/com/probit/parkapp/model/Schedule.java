@@ -5,12 +5,13 @@ import android.widget.Toast;
 import com.google.firebase.Timestamp;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.probit.parkapp.repositories.AuthRepository;
+import com.probit.parkapp.ui.schedules.SchedulesListItem;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Schedule implements FirestoreEntity {
+public class Schedule implements FirestoreEntity, SchedulesListItem {
 
     // Self fields
     private String id;
@@ -59,7 +60,7 @@ public class Schedule implements FirestoreEntity {
         long millisSalida  = checkoutDate.getTime();
         long diffMillis = millisSalida - millisEntrada;
         long tiempoMinutos = diffMillis / 1000 / 60;
-        float precio = Integer.parseInt(parkingHourRate);
+        float precio = Float.parseFloat(parkingHourRate);
         float cost = precio * tiempoMinutos / 60;
 
         return cost;

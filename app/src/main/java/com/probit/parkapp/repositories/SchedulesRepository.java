@@ -10,6 +10,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.probit.parkapp.common.Callback;
@@ -47,10 +48,10 @@ public class SchedulesRepository {
                 });
     }
 
-    public static void getUserSchedules(Callback.OnSuccess onSuccess, Callback.OnFailure onFailure) {
+    public static void getUserSchedules(Callback.OnSuccess<ArrayList<Schedule>> onSuccess, Callback.OnFailure onFailure) {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-        db.collection(SCHEDULES_COLLECTION).whereEqualTo("userId", AuthRepository.getUserId())
+        db.collection(SCHEDULES_COLLECTION).whereEqualTo("userId", AuthRepository.getUserId()).orderBy("checkinDate", Query.Direction.DESCENDING)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override

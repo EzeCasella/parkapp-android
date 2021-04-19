@@ -38,7 +38,7 @@
 
     <fragment
         android:id="@+id/navigation_dashboard"
-        android:name="com.probit.parkapp.ui.dashboard.DashboardFragment"
+        android:name="com.probit.parkapp.ui.schedules.SchedulesFragment"
         android:label="@string/title_reservas"
         tools:layout="@layout/fragment_dashboard" />
 
