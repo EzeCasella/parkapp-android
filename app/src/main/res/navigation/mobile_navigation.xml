@@ -48,3 +48,6 @@
         android:label="@string/perfil"
         tools:layout="@layout/fragment_profile" />
 </navigation>
+
+
+

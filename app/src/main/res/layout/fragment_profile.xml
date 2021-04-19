@@ -5,14 +5,14 @@
     android:id="@+id/linearLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/gray"
+    android:background="@color/white"
     tools:context="com.probit.parkapp.MainActivity">
 
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="387dp"
         android:layout_height="145dp"
-        android:background="@drawable/fondo_perfil"
+        android:background="@drawable/fondoperfil"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -23,7 +23,7 @@
         android:layout_width="95dp"
         android:layout_height="86dp"
         android:layout_marginTop="28dp"
-        android:src="@drawable/perfilmio"
+        android:src="@drawable/perfilmio1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.089"
         app:layout_constraintStart_toStartOf="parent"
@@ -89,12 +89,12 @@
         app:layout_constraintTop_toBottomOf="@+id/nombreperfil"
         app:layout_constraintVertical_bias="0.341" />
 
-    <TextView
+    <EditText
         android:id="@+id/textContact"
         android:layout_width="185dp"
         android:layout_height="25dp"
         android:layout_marginStart="64dp"
-        android:text="number phone"
+        android:hint='@string/PhoneNumber'
         app:layout_constraintBottom_toBottomOf="@+id/button_logout"
         app:layout_constraintStart_toEndOf="@+id/image_phone"
         app:layout_constraintTop_toBottomOf="@+id/nombreperfil"
