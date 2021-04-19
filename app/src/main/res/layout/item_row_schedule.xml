@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingTop="10dp">
+
+    <TextView
+        android:id="@+id/parking_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:text="@string/parking_colon"
+        android:textColor="@color/purple_500"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/parking_value"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        app:layout_constraintBaseline_toBaselineOf="@id/parking_label"
+        app:layout_constraintStart_toEndOf="@id/parking_label"
+        tools:text="Estacionamiento Cagancha" />
+
+    <TextView
+        android:id="@+id/checkin_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/checkin_colon"
+        android:textColor="@color/purple_500"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@id/parking_label"
+        app:layout_constraintTop_toBottomOf="@id/parking_label" />
+
+    <TextView
+        android:id="@+id/checkin_value"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:textColor="@color/black"
+        app:layout_constraintBaseline_toBaselineOf="@id/checkin_label"
+        app:layout_constraintStart_toEndOf="@id/parking_label"
+        tools:text="Mar 13, Abril - 11:30" />
+
+    <TextView
+        android:id="@+id/checkout_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/checkout_colon"
+        android:textColor="@color/purple_500"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@id/parking_label"
+        app:layout_constraintTop_toBottomOf="@id/checkin_label" />
+
+    <TextView
+        android:id="@+id/checkout_value"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:textColor="@color/black"
+        app:layout_constraintBaseline_toBaselineOf="@id/checkout_label"
+        app:layout_constraintStart_toEndOf="@id/checkout_label"
+        tools:text="Mar 13, Abril - 21:30" />
+
+    <TextView
+        android:id="@+id/cost_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="5dp"
+        android:text="@string/dolar_sign_colon"
+        android:textColor="@color/purple_500"
+        android:textSize="25sp"
+        app:layout_constraintTop_toTopOf="@id/cost_value"
+        app:layout_constraintBottom_toBottomOf="@id/cost_value"
+        app:layout_constraintEnd_toStartOf="@id/cost_value" />
+
+    <TextView
+        android:id="@+id/cost_value"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="20dp"
+        android:textColor="@color/black"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@id/checkout_label"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/parking_label"
+        tools:text="90" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_marginTop="10dp"
+        android:background="@color/grey"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/checkout_label" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
