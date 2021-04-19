@@ -13,6 +13,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.probit.parkapp.R;
 import com.probit.parkapp.common.Callback;
 import com.probit.parkapp.model.User;
 
@@ -36,6 +37,12 @@ public class AuthRepository {
     public static void signup(String email, String pass,
             Callback.OnSuccess onSuccess,
             Callback.OnFailure onFailure) {
+
+        if (email.isEmpty() || pass.isEmpty()) {
+            onFailure.run(R.string.api_error_campos_vacios);
+            return;
+        }
+
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
         mAuth.createUserWithEmailAndPassword(
                 email,
@@ -52,7 +59,7 @@ public class AuthRepository {
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "createUserWithEmail:failure", task.getException());
-                            onFailure.run("Falló el signup.");
+                            onFailure.run(R.string.api_error_fallo_signup);
                         }
                     }
                 });
@@ -61,6 +68,12 @@ public class AuthRepository {
     public static void login(String email, String pass,
                       Callback.OnSuccess onSuccess,
                       Callback.OnFailure onFailure) {
+
+        if (email.isEmpty() || pass.isEmpty()) {
+            onFailure.run(R.string.api_error_campos_vacios);
+            return;
+        }
+
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
         mAuth.signInWithEmailAndPassword(email, pass).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
@@ -75,7 +88,7 @@ public class AuthRepository {
                 } else {
                     // If sign in fails, display a message to the user.
                     Log.w(TAG, "loginEmailAndPass:failure", task.getException());
-                    onFailure.run("Error de autenticación.");
+                    onFailure.run(R.string.api_error_error_autenticacion);
                 }
             }
         });

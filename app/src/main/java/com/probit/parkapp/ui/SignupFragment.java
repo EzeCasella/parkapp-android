@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -13,6 +14,7 @@ import androidx.navigation.fragment.NavHostFragment;
 
 import com.probit.parkapp.LoginSignupActivity;
 import com.probit.parkapp.R;
+import com.probit.parkapp.repositories.AuthRepository;
 
 public class SignupFragment extends Fragment {
 
@@ -50,7 +52,12 @@ public class SignupFragment extends Fragment {
             public void onClick(View view) {
                 // Deberia validar los campos antes de mandar, y despues mandar
 
-                ((LoginSignupActivity)getActivity()).signup(userEmail.getText().toString(),userPass.getText().toString());
+                AuthRepository.signup(
+                        userEmail.getText().toString(),
+                        userPass.getText().toString(),
+                        data -> ((LoginSignupActivity)requireActivity()).navigateToMainActivity(), // OnSuccess
+                        errorStringId -> Toast.makeText(requireActivity(), getString((Integer) errorStringId), Toast.LENGTH_SHORT).show()
+                );
 
             }
         });

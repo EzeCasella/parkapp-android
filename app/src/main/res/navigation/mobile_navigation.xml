@@ -3,18 +3,43 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/navigation_home">
+    app:startDestination="@+id/navigation_map">
 
     <fragment
-        android:id="@+id/navigation_home"
-        android:name="com.probit.parkapp.ui.home.HomeFragment"
-        android:label="@string/title_home"
-        tools:layout="@layout/fragment_home" />
+        android:id="@+id/navigation_map"
+        android:name="com.probit.parkapp.ui.map.MapsFragment"
+        android:label="@string/title_map"
+        tools:layout="@layout/fragment_maps">
+
+        <action
+            android:id="@+id/action_navigation_map_to_reserva_fragment"
+            app:destination="@id/reserva_fragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/reserva_fragment"
+        android:name="com.probit.parkapp.ui.map.ReservaFragment"
+        android:label="@string/title_map"
+        tools:layout="@layout/fragment_maps">
+
+        <action
+            android:id="@+id/action_reserva_fragment_to_navigation_map"
+            app:destination="@id/navigation_map"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_dashboard"
         android:name="com.probit.parkapp.ui.dashboard.DashboardFragment"
-        android:label="@string/title_dashboard"
+        android:label="@string/title_reservas"
         tools:layout="@layout/fragment_dashboard" />
 
     <fragment

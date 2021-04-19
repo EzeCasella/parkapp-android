@@ -8,9 +8,13 @@ import java.util.Map;
 
 public class User implements FirestoreEntity {
 
+    private static final String PHONE_KEY = "phone" ;
+    private static final String NAME_KEY = "name";
+    private static final String EMAIL_KEY = "email";
     private String id;
     private String email;
     private String name = "";
+    private String phone = "";
 
     public User(FirebaseUser firebaseUser) {
         if (firebaseUser != null) {
@@ -21,8 +25,9 @@ public class User implements FirestoreEntity {
 
     public User(DocumentSnapshot user) {
         this.id = user.getId();
-        this.email = user.get("email").toString();
-        this.name = user.get("name").toString();
+        this.email = user.get(EMAIL_KEY).toString();
+        this.name  = user.get(NAME_KEY).toString();
+        this.phone = user.get(PHONE_KEY).toString();
     }
 
     public String getId() {
@@ -37,14 +42,19 @@ public class User implements FirestoreEntity {
         return name;
     }
 
+    public String getPhone() {
+        return phone;
+    }
+
     /*
     * Changing keys here will change attributes in Firestore.
     * */
     @Override
     public Map<String, Object> getHashForFirestore(){
         Map<String, Object> userHash = new HashMap<>();
-        userHash.put("name", this.getName());
-        userHash.put("email", this.getEmail());
+        userHash.put(NAME_KEY, this.getName());
+        userHash.put(EMAIL_KEY, this.getEmail());
+        userHash.put(PHONE_KEY, this.getPhone());
 
         return userHash;
     }

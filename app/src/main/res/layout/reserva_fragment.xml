@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:behavior_hideable="true"
+    app:behavior_peekHeight="120dp"
+    app:layout_behavior="android.support.design.widget.BottomSheetBehavior">
+
+    <TextView
+        android:id="@+id/nombre_parking"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Nombre"
+        android:textAlignment="center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.363"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/direccion_parking"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="56dp"
+        android:layout_marginTop="28dp"
+        android:text="Dirección"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/nombre_parking" />
+
+
+    <TextView
+        android:id="@+id/horario"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="56dp"
+        android:layout_marginTop="28dp"
+        android:text="Horario"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/direccion_parking" />
+
+    <ImageView
+        android:id="@+id/phone_image"
+        android:layout_width="41dp"
+        android:layout_height="26dp"
+        android:layout_marginStart="12dp"
+        android:background="#FFFFFF"
+        android:src="@drawable/ic_baseline_local_phone_24"
+        app:layout_constraintBottom_toTopOf="@+id/lugares_disponibles"
+        app:layout_constraintStart_toEndOf="@+id/direccion_parking"
+        app:layout_constraintTop_toBottomOf="@+id/nombre_parking"
+        app:layout_constraintVertical_bias="0.46" />
+
+    <TextView
+        android:id="@+id/telefono"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="28dp"
+        android:text="Telefono"
+        app:layout_constraintStart_toEndOf="@+id/phone_image"
+        app:layout_constraintTop_toBottomOf="@+id/nombre_parking" />
+
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="41dp"
+        android:layout_height="26dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="24dp"
+        android:src="@drawable/ic_baseline_event_available_24"
+        app:layout_constraintStart_toEndOf="@+id/horario"
+        app:layout_constraintTop_toBottomOf="@+id/phone_image" />
+
+    <TextView
+        android:id="@+id/lugares_disponibles"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="28dp"
+        android:text="Lugares disponibles"
+        app:layout_constraintStart_toEndOf="@+id/imageView3"
+        app:layout_constraintTop_toBottomOf="@+id/telefono" />
+
+    <TextView
+        android:id="@+id/hora_desde"
+        style="@style/shadoweffect"
+        android:layout_width="180dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:background="@drawable/rounded_corner"
+        android:backgroundTint="#0bcce6"
+        android:ems="10"
+        android:hint="Hora desde..."
+        android:inputType="time"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.666"
+        app:layout_constraintLeft_toRightOf="@id/fecha_desde"
+        app:layout_constraintStart_toEndOf="@+id/fecha_desde"
+        app:layout_constraintTop_toBottomOf="@+id/notas" />
+
+    <Button
+        android:id="@+id/reservar_button"
+        android:layout_width="129dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="24dp"
+        android:background="@drawable/rounded_corner"
+        android:backgroundTint="#0bcce6"
+        android:text="@string/reservar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.507"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/hora_hasta" />
+
+    <TextView
+        android:id="@+id/costo"
+        style="@style/shadoweffect"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/rounded_corner"
+        android:text=""
+        app:layout_constraintBottom_toBottomOf="@+id/reservar_button"
+        app:layout_constraintEnd_toStartOf="@+id/reservar_button"
+        app:layout_constraintHorizontal_bias="0.577"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/fecha_hasta"
+        app:layout_constraintVertical_bias="0.869" />
+
+    <TextView
+        android:id="@+id/hora_hasta"
+        style="@style/shadoweffect"
+        android:layout_width="180dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:background="@drawable/rounded_corner"
+        android:backgroundTint="#0bcce6"
+        android:ems="10"
+        android:hint="Hora hasta..."
+        android:inputType="time"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.666"
+        app:layout_constraintLeft_toRightOf="@id/fecha_hasta"
+        app:layout_constraintStart_toEndOf="@+id/fecha_hasta"
+        app:layout_constraintTop_toBottomOf="@+id/hora_desde" />
+
+    <TextView
+        android:id="@+id/fecha_desde"
+        style="@style/shadoweffect"
+        android:layout_width="180dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="24dp"
+        android:background="@drawable/rounded_corner"
+        android:backgroundTint="#0bcce6"
+        android:ems="10"
+        android:hint="Fecha desde..."
+        android:inputType="date"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/notas" />
+
+    <TextView
+        android:id="@+id/fecha_hasta"
+        style="@style/shadoweffect"
+        android:layout_width="180dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="4dp"
+        android:background="@drawable/rounded_corner"
+        android:backgroundTint="#0bcce6"
+        android:ems="10"
+        android:hint="Fecha hasta..."
+        android:inputType="date"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/fecha_desde" />
+
+    <ImageView
+        android:id="@+id/imageView5"
+        android:layout_width="41dp"
+        android:layout_height="26dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:src="@drawable/ic_baseline_attach_money_24"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView2" />
+
+    <TextView
+        android:id="@+id/costo_hora"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="24dp"
+        android:text="Precio por hora"
+        app:layout_constraintStart_toEndOf="@+id/imageView5"
+        app:layout_constraintTop_toBottomOf="@+id/horario" />
+
+    <TextView
+        android:id="@+id/notas"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Notas"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.03"
+        app:layout_constraintStart_toEndOf="@+id/imageView4"
+        app:layout_constraintTop_toBottomOf="@+id/costo_hora" />
+
+    <ImageView
+        android:id="@+id/imageView4"
+        android:layout_width="41dp"
+        android:layout_height="26dp"
+        android:layout_marginStart="8dp"
+        android:src="@drawable/ic_baseline_notes_24"
+        app:layout_constraintBottom_toTopOf="@+id/fecha_desde"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView5"
+        app:layout_constraintVertical_bias="0.285" />
+
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="41dp"
+        android:layout_height="26dp"
+        android:src="@drawable/ic_baseline_location_city_24"
+        app:layout_constraintBottom_toTopOf="@+id/horario"
+        app:layout_constraintEnd_toStartOf="@+id/direccion_parking"
+        app:layout_constraintHorizontal_bias="0.533"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/nombre_parking"
+        app:layout_constraintVertical_bias="0.46" />
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="41dp"
+        android:layout_height="26dp"
+        android:layout_marginTop="24dp"
+        android:src="@drawable/ic_baseline_access_time_24"
+        app:layout_constraintEnd_toStartOf="@+id/horario"
+        app:layout_constraintHorizontal_bias="0.533"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

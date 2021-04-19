@@ -2,6 +2,7 @@ package com.probit.parkapp.ui.map;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -12,9 +13,12 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.Navigation;
+import androidx.navigation.fragment.NavHostFragment;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -24,8 +28,11 @@ import com.google.android.gms.maps.UiSettings;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.material.bottomsheet.BottomSheetDialog;
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.probit.parkapp.R;
 import com.probit.parkapp.model.Parking;
+import com.probit.parkapp.ui.SignupFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -50,6 +57,7 @@ public class MapsFragment extends Fragment {
 
         mViewModel.getParkingsLiveData().observe(getViewLifecycleOwner(), this::addMarkersAndMove);
 
+
         return root;
     }
 
@@ -71,13 +79,12 @@ public class MapsFragment extends Fragment {
         @Override
         public void onMapReady(GoogleMap _googleMap) {
             googleMap = _googleMap;
-
             googleMap.setOnMarkerClickListener(onMarkerClickListener);
             googleMap.setOnInfoWindowClickListener(onInfoWindowClickListener);
             UiSettings uiSettings = googleMap.getUiSettings();
             uiSettings.setZoomControlsEnabled(true);
             uiSettings.setMyLocationButtonEnabled(true);
-            uiSettings.setMapToolbarEnabled(false);
+            uiSettings.setMapToolbarEnabled(true);
 
             mViewModel.onMapReady();
 
@@ -106,8 +113,8 @@ public class MapsFragment extends Fragment {
             String permiso1 = Manifest.permission.ACCESS_FINE_LOCATION;
             String permiso2 = Manifest.permission.ACCESS_COARSE_LOCATION;
             List<String> permissionlist = new ArrayList<>();
-            permissionlist.add(permiso1);
             permissionlist.add(permiso2);
+            permissionlist.add(permiso1);
 
             ActivityCompat.requestPermissions(getActivity(), permissionlist.toArray(new String[permissionlist.size()]), LOCATION_PERMISSION_REQUEST_CODE);
 
@@ -124,9 +131,9 @@ public class MapsFragment extends Fragment {
         public boolean onMarkerClick(Marker marker) {
             int position = (int) (marker.getTag());
             Parking pk = mViewModel.getParkings().get(position);
-            Toast.makeText(getContext(), pk.getAddress(), Toast.LENGTH_SHORT).show();
 
-            // BottomSheetModalFragment
+            ReservaFragment bottomSheet = new ReservaFragment(pk);
+            bottomSheet.show(getActivity().getSupportFragmentManager(), "InformacionParking");
 
             return false;
         }
@@ -136,7 +143,7 @@ public class MapsFragment extends Fragment {
     GoogleMap.OnInfoWindowClickListener onInfoWindowClickListener = new GoogleMap.OnInfoWindowClickListener() {
         @Override
         public void onInfoWindowClick(Marker marker) {
-            Toast.makeText(getContext(), "ENTRO A RESERVAR" , Toast.LENGTH_SHORT).show();
+
         }
     };
 
@@ -147,7 +154,6 @@ public class MapsFragment extends Fragment {
             case LOCATION_PERMISSION_REQUEST_CODE:
                 if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     // Permission Granted
-//                    googleMap.setMyLocationEnabled(true);
                     enableLocation();
                 } else {
                     // Permission Denied
