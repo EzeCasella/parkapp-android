@@ -1,11 +1,13 @@
 package com.probit.parkapp.ui;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -13,7 +15,10 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.probit.parkapp.LoginSignupActivity;
+import com.probit.parkapp.MainActivity;
 import com.probit.parkapp.R;
+import com.probit.parkapp.repositories.AuthRepository;
 
 public class PerfilFragment extends Fragment implements AdapterView.OnItemSelectedListener {
 
@@ -43,14 +48,15 @@ public class PerfilFragment extends Fragment implements AdapterView.OnItemSelect
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        /*Button button_logout = view.findViewById(R.id.button_logout);
+        Button button_logout = view.findViewById(R.id.button_logout);
         button_logout.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View view) {
-                ((LoginSignupActivity)getActivity()).signOut();
+                AuthRepository.signOut();
+                ((MainActivity) requireActivity()).navigateToLoginActivity();
             }
-        });*/
+        });
     }
 
 
