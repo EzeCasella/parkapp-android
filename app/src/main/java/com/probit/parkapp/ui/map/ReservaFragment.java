@@ -7,6 +7,7 @@ import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.DialogInterface;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
@@ -117,13 +118,27 @@ public class ReservaFragment extends BottomSheetDialogFragment {
         // Seteando texto a los text view
         tvNombreParking.setText(nombreParking);
         tvNombreParking.setTextSize(16);
+        tvNombreParking.setTextColor(Color.parseColor("black"));
         tvNombreParking.setAllCaps(true);
+        tvNombreParking.setTypeface(null, Typeface.BOLD);
+
         tvDireccion.setText(direccion);
+        tvDireccion.setTextColor(Color.parseColor("black"));
+
         tvTelefono.setText(telefono);
+        tvTelefono.setTextColor(Color.parseColor("black"));
+
         tvHorario.setText(horario);
+        tvHorario.setTextColor(Color.parseColor("black"));
+
         tvLugaresDisponibles.setText(lugaresDisponibles);
+        tvLugaresDisponibles.setTextColor(Color.parseColor("black"));
+
         tvNotas.setText(notas);
+        tvNotas.setTextColor(Color.parseColor("black"));
+
         tvCostoHora.setText("$ " + precioHora);
+        tvCostoHora.setTextColor(Color.parseColor("black"));
 
         // Perform click event on text view
         dateFrom.setOnClickListener(new View.OnClickListener() {
