@@ -82,9 +82,9 @@ public class AuthRepository {
                     Log.d(TAG, "loginEmailAndPass:success");
 
                     // TODO: esto no deberia llegar a PROD porque aumentaría innecesariamente las lecturas a Firestore y se cobran.
-//                    onSuccess.run("Success");
-                    User newUser = new User(task.getResult().getUser());
-                    updateCreateUser(newUser, onSuccess, onFailure);
+                    onSuccess.run("Success");
+//                    User newUser = new User(task.getResult().getUser());
+//                    updateCreateUser(newUser, onSuccess, onFailure);
                 } else {
                     // If sign in fails, display a message to the user.
                     Log.w(TAG, "loginEmailAndPass:failure", task.getException());

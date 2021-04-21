@@ -34,13 +34,17 @@ public class PerfilFragment extends Fragment implements AdapterView.OnItemSelect
     }
 
     Spinner spinner;
+    ArrayAdapter<CharSequence> adapter;
+    int position;
+    int posicion;
 
     String nombreperfil;
     String email;
     String telefono;
     String id;
+    String vehicle;
 
-    TextView tvNombrePerfil;
+    EditText tvNombrePerfil;
     TextView tvEmail;
     EditText etTelefono;
 
@@ -51,14 +55,14 @@ public class PerfilFragment extends Fragment implements AdapterView.OnItemSelect
         View root = inflater.inflate(R.layout.fragment_profile, container, false);
 
         spinner = root.findViewById(R.id.spinner_Vehiculo);
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(),
+        adapter = ArrayAdapter.createFromResource(getContext(),
                 R.array.Vehiculos, android.R.layout.simple_spinner_dropdown_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
         spinner.setOnItemSelectedListener(this);
+        vehicle = spinner.getItemAtPosition(position).toString();
 
-
-        tvNombrePerfil = (TextView) root.findViewById(R.id.nombreperfil);
+        tvNombrePerfil = (EditText) root.findViewById(R.id.nombreperfil);
         tvEmail        = (TextView) root.findViewById(R.id.textMail);
         etTelefono     = (EditText) root.findViewById(R.id.textContact);
 
@@ -83,12 +87,11 @@ public class PerfilFragment extends Fragment implements AdapterView.OnItemSelect
             @Override
             public void onClick(View v) {
                 User user = new User();
-                user.setName((String) tvNombrePerfil.getText());
-                user.setEmail((String) tvEmail.getText());
+                user.setName(tvNombrePerfil.getText().toString());
+                user.setEmail(tvEmail.getText().toString());
                 user.setPhone(etTelefono.getText().toString());
                 user.setId(id);
-
-//                spinner.getSelectedItem();
+                user.setVehicle(vehicle);
 
                 AuthRepository.updateCreateUser(user, data -> {
                     Toast.makeText(getContext(), "Se actualizaron sus datos", Toast.LENGTH_SHORT).show();
@@ -116,7 +119,9 @@ public class PerfilFragment extends Fragment implements AdapterView.OnItemSelect
         email        = user.getEmail();
         telefono     = user.getPhone();
         id           = user.getId();
+        vehicle      = user.getVehicle();
 
+        spinner.setSelection(adapter.getPosition(vehicle));
 
         tvNombrePerfil.setText(nombreperfil);
         tvEmail.setText(email);
@@ -126,11 +131,12 @@ public class PerfilFragment extends Fragment implements AdapterView.OnItemSelect
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         Toast.makeText(parent.getContext(), "Usted a seleccionado: "+parent.getItemAtPosition(position),Toast.LENGTH_SHORT).show();
+        vehicle = parent.getItemAtPosition(position).toString();
     }
 
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
-
+        vehicle = parent.getItemAtPosition(0).toString();
     }
 
 
