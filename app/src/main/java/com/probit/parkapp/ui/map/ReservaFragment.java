@@ -7,6 +7,7 @@ import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.DialogInterface;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
@@ -116,8 +117,6 @@ public class ReservaFragment extends BottomSheetDialogFragment {
 
         // Seteando texto a los text view
         tvNombreParking.setText(nombreParking);
-        tvNombreParking.setTextSize(16);
-        tvNombreParking.setAllCaps(true);
         tvDireccion.setText(direccion);
         tvTelefono.setText(telefono);
         tvHorario.setText(horario);
