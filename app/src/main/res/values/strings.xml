@@ -26,6 +26,7 @@
 
     <!-- Array del spinner de perfil -->
     <string-array name="Vehiculos">
+        <item>Ninguno</item>
         <item>Car</item>
         <item>Motorcycle</item>
         <item>Bike</item>
