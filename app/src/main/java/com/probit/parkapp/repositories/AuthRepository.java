@@ -99,7 +99,7 @@ public class AuthRepository {
         mAuth.signOut();
     }
 
-    private static void updateCreateUser(User user, Callback.OnSuccess onSuccess, Callback.OnFailure onFailure) {
+    public static void updateCreateUser(User user, Callback.OnSuccess onSuccess, Callback.OnFailure onFailure) {
 
         String userId = user.getId();
         Map<String, Object> userHash = user.getHashForFirestore();
