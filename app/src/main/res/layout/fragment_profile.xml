@@ -54,7 +54,7 @@
         app:layout_constraintBottom_toBottomOf="@+id/button_save"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/circleImageView"
-        app:layout_constraintVertical_bias="0.252" />
+        app:layout_constraintVertical_bias="0.278" />
 
     <ImageView
         android:id="@+id/image_phone"
@@ -65,7 +65,7 @@
         app:layout_constraintBottom_toBottomOf="@+id/button_save"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/circleImageView"
-        app:layout_constraintVertical_bias="0.474" />
+        app:layout_constraintVertical_bias="0.516" />
 
     <ImageView
         android:id="@+id/image_car"
@@ -115,13 +115,13 @@
         android:id="@+id/button_logout"
         android:layout_width="99dp"
         android:layout_height="36dp"
-        android:layout_marginTop="340dp"
+        android:layout_marginTop="328dp"
         android:background="@drawable/buttonstyleithgradient"
-        android:text="Log out"
+        android:text="Logout"
         android:textColor="@color/white"
         app:backgroundTint="@color/blue2"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.401"
+        app:layout_constraintHorizontal_bias="0.368"
         app:layout_constraintStart_toEndOf="@+id/button_save"
         app:layout_constraintTop_toBottomOf="@+id/nombreperfil" />
 

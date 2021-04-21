@@ -1,8 +1,6 @@
 package com.probit.parkapp.ui;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,12 +16,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.DocumentSnapshot;
-import com.probit.parkapp.LoginSignupActivity;
 import com.probit.parkapp.MainActivity;
 import com.probit.parkapp.R;
-import com.probit.parkapp.common.Callback;
 import com.probit.parkapp.model.User;
 import com.probit.parkapp.repositories.AuthRepository;
 
