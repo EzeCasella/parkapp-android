@@ -3,22 +3,22 @@
     <string name="title_map">Mapa</string>
     <string name="title_reservas">Reservas</string>
     <string name="title_perfil">Mi perfil</string>
-    <string name="title_activity_maps">Map</string>
-    <string name="title_home">Home</string>
-    <string name="title_dashboard">Dashboard</string>
-    <string name="title_notifications">Notifications</string>
+    <string name="title_activity_maps">Mapa</string>
+    <string name="title_home">Inicio</string>
+    <string name="title_dashboard">Tablero</string>
+    <string name="title_notifications">Notificaciones</string>
     <string name="title_activity_login_signup">LoginSignupActivity</string>
     <!-- Strings used for fragments for navigation -->
     <string name="first_fragment_label">First Fragment</string>
     <string name="second_fragment_label">Second Fragment</string>
 
     <string name="email">Email</string>
-    <string name="password">Password</string>
+    <string name="password">Contraseña</string>
     <string name="sign_up">Sign up</string>
     <string name="log_in">Log in</string>
     <string name="log_out">Log out</string>
-    <string name="dont_have_account">Don\'t have an account? Sign up</string>
-    <string name="already_have_account">Already have an account? Log in</string>
+    <string name="dont_have_account">No tienes cuenta? Sign up</string>
+    <string name="already_have_account">Ya tienes una cuenta? Log in</string>
     <string name="reservar">Reservar</string>
     <string name="parking_colon">Parking:</string>
     <string name="checkin_colon">Checkin:</string>
