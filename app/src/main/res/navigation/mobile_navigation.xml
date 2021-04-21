@@ -43,8 +43,11 @@
         tools:layout="@layout/fragment_dashboard" />
 
     <fragment
-        android:id="@+id/navigation_notifications"
-        android:name="com.probit.parkapp.ui.notifications.NotificationsFragment"
-        android:label="@string/title_perfil"
-        tools:layout="@layout/fragment_notifications" />
+        android:id="@+id/navigation_profile"
+        android:name="com.probit.parkapp.ui.PerfilFragment"
+        android:label="@string/perfil"
+        tools:layout="@layout/fragment_profile" />
 </navigation>
+
+
+
