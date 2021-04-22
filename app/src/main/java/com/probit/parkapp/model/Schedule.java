@@ -86,15 +86,25 @@ public class Schedule implements FirestoreEntity, SchedulesListItem {
                 parking.getName(), parking.getAddress(), parking.getHourRate());
     }
 
+    private static final String PARKING_KEY = "parkingId";
+    private static final String USER_KEY = "userId";
+    private static final String CHECKIN_KEY = "checkinDate";
+    private static final String CHECKOUT_KEY = "checkoutDate";
+    private static final String PARKING_NAME_KEY = "parkingName";
+    private static final String PARKING_ADDRESS_KEY = "parkingAddress";
+    private static final String PARKING_RATE_KEY = "parkingHourRate";
+
+    private static final String DELETED_KEY = "deleted";
+
     public Schedule (DocumentSnapshot schedule) {
         this(schedule.getId(),
-                schedule.get("parkingId").toString(),
-                schedule.get("userId").toString(),
-                schedule.getTimestamp("checkinDate").toDate(),
-                schedule.getTimestamp("checkoutDate").toDate(),
-                schedule.get("parkingName").toString(),
-                schedule.get("parkingAddress").toString(),
-                schedule.get("parkingHourRate").toString());
+                schedule.get(PARKING_KEY).toString(),
+                schedule.get(USER_KEY).toString(),
+                schedule.getTimestamp(CHECKIN_KEY).toDate(),
+                schedule.getTimestamp(CHECKOUT_KEY).toDate(),
+                schedule.get(PARKING_NAME_KEY).toString(),
+                schedule.get(PARKING_ADDRESS_KEY).toString(),
+                schedule.get(PARKING_RATE_KEY).toString());
     }
 
     private Schedule(String parkingId, Date checkinDate, Date checkoutDate, String parkingName, String parkingAddress, String parkingHourRate) {
@@ -121,13 +131,15 @@ public class Schedule implements FirestoreEntity, SchedulesListItem {
     public Map<String, Object> getHashForFirestore(){
 
         Map<String, Object> scheduleHash = new HashMap<>();
-        scheduleHash.put("parkingId", this.getParkingId());
-        scheduleHash.put("userId", this.getUserId());
-        scheduleHash.put("checkinDate", new Timestamp(this.getCheckinDate()));
-        scheduleHash.put("checkoutDate", new Timestamp(this.getCheckoutDate()));
-        scheduleHash.put("parkingName", this.getParkingName());
-        scheduleHash.put("parkingAddress", this.getParkingAddress());
-        scheduleHash.put("parkingHourRate", this.getParkingHourRate());
+        scheduleHash.put(PARKING_KEY, this.getParkingId());
+        scheduleHash.put(USER_KEY, this.getUserId());
+        scheduleHash.put(CHECKIN_KEY, new Timestamp(this.getCheckinDate()));
+        scheduleHash.put(CHECKOUT_KEY, new Timestamp(this.getCheckoutDate()));
+        scheduleHash.put(PARKING_NAME_KEY, this.getParkingName());
+        scheduleHash.put(PARKING_ADDRESS_KEY, this.getParkingAddress());
+        scheduleHash.put(PARKING_RATE_KEY, this.getParkingHourRate());
+
+        scheduleHash.put(DELETED_KEY, false);
 
         return scheduleHash;
     }
