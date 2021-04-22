@@ -51,7 +51,10 @@ public class SchedulesRepository {
     public static void getUserSchedules(Callback.OnSuccess<ArrayList<Schedule>> onSuccess, Callback.OnFailure onFailure) {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-        db.collection(SCHEDULES_COLLECTION).whereEqualTo("userId", AuthRepository.getUserId()).orderBy("checkinDate", Query.Direction.DESCENDING)
+        db.collection(SCHEDULES_COLLECTION)
+                .whereEqualTo("userId", AuthRepository.getUserId())
+                .whereEqualTo("deleted", false)
+                .orderBy("checkinDate", Query.Direction.DESCENDING)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
@@ -69,5 +72,22 @@ public class SchedulesRepository {
                         }
                     }
                 });
+    }
+
+    public static void deleteSchedule(String scheduleId, Callback.OnSuccess onSuccess, Callback.OnFailure onFailure) {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+        db.collection(SCHEDULES_COLLECTION).document(scheduleId)
+                .update("deleted", true)
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if (task.isSuccessful()) {
+                    onSuccess.run(true);
+                } else {
+                    onFailure.run("Error borrando la reserva");
+                }
+            }
+        });
     }
 }

@@ -64,4 +64,13 @@ public class SchedulesViewModel extends ViewModel {
         mSchedulesAndTitles.setValue(results);
     }
 
+    public void onDeleteSchedule(int position, Callback.OnFailure onFailure){
+        ArrayList<SchedulesListItem> scheds = mSchedulesAndTitles.getValue();
+
+        Schedule schedule = (Schedule) scheds.get(position);
+        SchedulesRepository.deleteSchedule(schedule.getId(),data -> {
+            fetchSchedules(onFailure);
+        }, onFailure);
+    }
+
 }

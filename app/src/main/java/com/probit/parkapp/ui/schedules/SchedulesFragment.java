@@ -35,7 +35,7 @@ public class SchedulesFragment extends Fragment {
         View root = inflater.inflate(R.layout.fragment_dashboard, container, false);
 
         RecyclerView schedulesRecycler = root.findViewById(R.id.schedules_recycler);
-        schedulesAdapter = new SchedulesAdapter();
+        schedulesAdapter = new SchedulesAdapter(position -> schedulesViewModel.onDeleteSchedule(position, this::handleError));
         schedulesRecycler.setAdapter(schedulesAdapter);
         schedulesRecycler.setLayoutManager(new LinearLayoutManager(getContext()));
 
