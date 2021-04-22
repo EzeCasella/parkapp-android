@@ -8,6 +8,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -16,6 +17,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.bumptech.glide.Glide;
 import com.probit.parkapp.MainActivity;
 import com.probit.parkapp.R;
 import com.probit.parkapp.model.User;
@@ -106,6 +108,14 @@ public class PerfilFragment extends Fragment implements AdapterView.OnItemSelect
                 ((MainActivity) requireActivity()).navigateToLoginActivity();
             }
         });
+
+        ImageView imageView;
+        imageView = view.findViewById(R.id.circleImageView);
+        String url = "https://lh3.googleusercontent.com/proxy/sbFC-LqaFQZQJUTKnp89MukGz4e0LdaXC_T_eJWK2iiPHZEPtVJywc_l8Oo9z6Vt2k13lBDBzKIkcP_AC6ssbwOb8WEiCxFKQm3LKTidhYPAdmYZ7sg9Qj6zIfQsdy0bZJH1P81g8g";
+        Glide.with(this)
+                .load(url)
+                .circleCrop()
+                .into(imageView);
     }
 
     public void setearDatos(User user){
