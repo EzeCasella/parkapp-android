@@ -18,6 +18,14 @@
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_right" />
+
+        <action
+        android:id="@+id/action_navigation_map_to_parkinglist_fragment"
+        app:destination="@id/navigation_parking_list"
+        app:enterAnim="@anim/slide_in_right"
+        app:exitAnim="@anim/slide_out_left"
+        app:popEnterAnim="@anim/slide_in_left"
+        app:popExitAnim="@anim/slide_out_right" />
     </fragment>
 
     <fragment
@@ -25,15 +33,6 @@
         android:name="com.probit.parkapp.ui.map.ReservaFragment"
         android:label="@string/title_map"
         tools:layout="@layout/fragment_maps">
-
-        <action
-            android:id="@+id/action_reserva_fragment_to_navigation_map"
-            app:destination="@id/navigation_map"
-            app:enterAnim="@anim/slide_in_right"
-            app:exitAnim="@anim/slide_out_left"
-            app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_right" />
-
     </fragment>
 
     <fragment
@@ -47,6 +46,16 @@
         android:name="com.probit.parkapp.ui.PerfilFragment"
         android:label="@string/perfil"
         tools:layout="@layout/fragment_profile" />
+
+
+    <fragment
+        android:id="@+id/navigation_parking_list"
+        android:name="com.probit.parkapp.ui.parkings.ParkingListFragment"
+        android:label="@string/title_map"
+        tools:layout="@layout/fragment_parking_list">
+
+    </fragment>
+
 </navigation>
 
 

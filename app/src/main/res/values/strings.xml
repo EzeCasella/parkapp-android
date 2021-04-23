@@ -48,4 +48,11 @@
     <string name="api_error_campos_vacios">Debe completar los campos para poder iniciar sesión.</string>
     <string name="api_error_error_autenticacion">Error de autenticación.</string>
     <string name="api_error_fallo_signup">Falló el signup.</string>
+
+
+    <string name="parking_direccion">Dirección: </string>
+    <string name="parking_horario">Horario:</string>
+    <string name="lista_de_parkings">Lista de Parkings</string>
+
+
 </resources>

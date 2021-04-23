@@ -28,6 +28,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
@@ -45,6 +46,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.probit.parkapp.R;
 import com.probit.parkapp.model.Parking;
+import com.probit.parkapp.ui.LoginFragment;
 import com.probit.parkapp.ui.SignupFragment;
 
 import java.io.IOException;
@@ -111,6 +113,15 @@ public class MapsFragment extends Fragment {
         RelativeLayout.LayoutParams location_layout = (RelativeLayout.LayoutParams) location_button.getLayoutParams();
         location_layout.addRule(RelativeLayout.ALIGN_PARENT_TOP, 0);
         location_layout.addRule(RelativeLayout.ABOVE, zoom_layout.getId());
+
+        Button parkingList = root.findViewById(R.id.parking_list_button);
+        parkingList.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                NavHostFragment.findNavController(MapsFragment.this)
+                        .navigate(R.id.action_navigation_map_to_parkinglist_fragment);
+            }
+        });
 
 
         return root;
