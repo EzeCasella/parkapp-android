@@ -62,13 +62,6 @@ public class LoginFragment extends Fragment {
 
             }
         });
-
-        Button signOutButton = view.findViewById(R.id.sign_out_button);
-        signOutButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                AuthRepository.signOut();
-            }
-        });
+        
     }
 }

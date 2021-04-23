@@ -17,12 +17,13 @@
     <string name="email">Email</string>
     <string name="password">Contraseña</string>
     <string name="sign_up">Sign up</string>
-    <string name="log_in">Log in</string>
-    <string name="log_out">Log out</string>
-    <string name="dont_have_account">No tienes cuenta? Sign up</string>
+    <string name="log_in">Inciar sesión</string>
+    <string name="log_out">Cerrar sesión</string>
+    <string name="dont_have_account">No tienes cuenta? Regístrate</string>
     <string name="already_have_account">Ya tienes una cuenta? Log in</string>
     <string name="SpVehiculos">Spinner Vehiculos</string>
     <string name="PhoneNumber">Numero de teléfono</string>
+    <string name="save">Guardar</string>
 
     <!-- Array del spinner de perfil -->
     <string-array name="Vehiculos">
