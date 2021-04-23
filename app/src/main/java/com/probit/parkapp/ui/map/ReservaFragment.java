@@ -143,6 +143,7 @@ public class ReservaFragment extends BottomSheetDialogFragment {
                                 // set day of month , month and year value in the edit text
                                 dateFrom.setText(dayOfMonth + "/"
                                         + (monthOfYear + 1) + "/" + year);
+                                dateFrom.setTextColor(Color.WHITE);
                                 calcularCosto();
 
                             }
@@ -169,6 +170,7 @@ public class ReservaFragment extends BottomSheetDialogFragment {
                                 // set day of month , month and year value in the edit text
                                 dateTo.setText(dayOfMonth + "/"
                                         + (monthOfYear + 1) + "/" + year);
+                                dateTo.setTextColor(Color.WHITE);
                                 calcularCosto();
 
                             }
@@ -188,6 +190,7 @@ public class ReservaFragment extends BottomSheetDialogFragment {
                     @Override
                     public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
                         timeFrom.setText(selectedHour + ":" + selectedMinute);
+                        timeFrom.setTextColor(Color.WHITE);
                         calcularCosto();
                     }
                 }, hour, minute, true);//Yes 24 hour time
@@ -207,6 +210,7 @@ public class ReservaFragment extends BottomSheetDialogFragment {
                     @Override
                     public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
                         timeTo.setText(selectedHour + ":" + selectedMinute);
+                        timeTo.setTextColor(Color.WHITE);
                         calcularCosto();
                                           }
                 }, hour, minute, true);//Yes 24 hour time
