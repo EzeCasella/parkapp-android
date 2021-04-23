@@ -136,7 +136,6 @@ public class PerfilFragment extends Fragment implements AdapterView.OnItemSelect
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        Toast.makeText(parent.getContext(), "Usted a seleccionado: "+parent.getItemAtPosition(position),Toast.LENGTH_SHORT).show();
         vehicle = parent.getItemAtPosition(position).toString();
     }
 
