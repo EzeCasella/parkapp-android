@@ -9,29 +9,40 @@
     android:layout_marginTop="0dp"
     android:layout_marginBottom="50dp"
     android:visibility="visible"
-    tools:context=".ui.map.MapsFragment">
+    tools:context=".ui.map.MapsFragment"
+    tools:visibility="visible">
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/waze_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:elevation="10dp"
-        android:foreground="@mipmap/ic_waze_icon_round"
-        android:layout_marginTop="500dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="65dp"
         android:layout_marginBottom="50dp"
-        android:layout_marginLeft="10dp" />
+        android:elevation="10dp"
+        android:foreground="@mipmap/ic_waze_icon_round" />
 
     <SearchView
         android:id="@+id/search_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="5dp"
         android:background="@drawable/rounded_corner"
+        android:backgroundTint="@color/white"
         android:elevation="5dp"
         android:iconifiedByDefault="false"
-        android:queryHint="Buscar..."
-        android:backgroundTint="@color/white"
-        android:layout_marginTop="10dp"
-        android:layout_marginLeft="5dp"
-        android:layout_marginRight="5dp"/>
+        android:queryHint="Buscar..." />
+
+    <Button
+        android:id="@+id/parking_list_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/rounded_corner"
+        android:layout_marginLeft="100dp"
+        android:layout_marginTop="550dp"
+        android:text="@string/lista_de_parkings"/>
+
 
 </fragment>

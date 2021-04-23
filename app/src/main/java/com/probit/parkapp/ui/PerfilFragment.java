@@ -111,9 +111,11 @@ public class PerfilFragment extends Fragment implements AdapterView.OnItemSelect
 
         ImageView imageView;
         imageView = view.findViewById(R.id.circleImageView);
-        String url = "https://lh3.googleusercontent.com/proxy/sbFC-LqaFQZQJUTKnp89MukGz4e0LdaXC_T_eJWK2iiPHZEPtVJywc_l8Oo9z6Vt2k13lBDBzKIkcP_AC6ssbwOb8WEiCxFKQm3LKTidhYPAdmYZ7sg9Qj6zIfQsdy0bZJH1P81g8g";
+        String url = "https://www.pngkey.com/png/full/73-730477_first-name-profile-image-placeholder-png.png";
         Glide.with(this)
                 .load(url)
+                .placeholder(R.drawable.ic_baseline_image_24)
+                .error(R.drawable.ic_baseline_image_not_supported_24)
                 .circleCrop()
                 .into(imageView);
     }
@@ -134,7 +136,6 @@ public class PerfilFragment extends Fragment implements AdapterView.OnItemSelect
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        Toast.makeText(parent.getContext(), "Usted a seleccionado: "+parent.getItemAtPosition(position),Toast.LENGTH_SHORT).show();
         vehicle = parent.getItemAtPosition(position).toString();
     }
 

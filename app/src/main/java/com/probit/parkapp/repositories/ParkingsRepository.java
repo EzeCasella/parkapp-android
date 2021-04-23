@@ -15,6 +15,7 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.probit.parkapp.common.Callback;
 import com.probit.parkapp.model.Parking;
+import com.probit.parkapp.model.Schedule;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -24,7 +25,7 @@ public class ParkingsRepository {
 
     private static final String TAG = "ParkingsRepository";
 
-     public static void getParkings(Callback.OnSuccess onSuccess, Callback.OnFailure onFailure) {
+     public static void getParkings(Callback.OnSuccess<ArrayList<Parking>> onSuccess, Callback.OnFailure onFailure) {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
         db.collection("parkings")
