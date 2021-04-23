@@ -1,11 +1,15 @@
 package com.probit.parkapp.ui.schedules;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
@@ -14,6 +18,7 @@ import com.probit.parkapp.R;
 import com.probit.parkapp.model.Schedule;
 
 import java.text.SimpleDateFormat;
+import java.util.List;
 import java.util.Locale;
 
 public class SchedulesAdapter extends ListAdapter<SchedulesListItem, SchedulesAdapter.ViewHolder> {
@@ -21,12 +26,26 @@ public class SchedulesAdapter extends ListAdapter<SchedulesListItem, SchedulesAd
     private final int TITLE_VIEW_TYPE = 1;
     private final int SCHEDULE_VIEW_TYPE = 2;
 
-    public SchedulesAdapter(){
-        this(new SchedulesDiff());
+    private OnDeleteCallback onDeleteCallback;
+
+    public interface OnDeleteCallback {
+        void run(int position);
     }
 
-    protected SchedulesAdapter(@NonNull SchedulesDiff diffCallback) {
+    @Override
+    public void submitList(@Nullable List<SchedulesListItem> list) {
+
+        super.submitList(list);
+        this.notifyDataSetChanged();
+    }
+
+    public SchedulesAdapter(OnDeleteCallback onDeleteCallback){
+        this( onDeleteCallback ,new SchedulesDiff());
+    }
+
+    protected SchedulesAdapter(OnDeleteCallback onDeleteCallback, @NonNull SchedulesDiff diffCallback) {
         super(diffCallback);
+        this.onDeleteCallback = onDeleteCallback;
     }
 
     public static class SchedulesDiff extends DiffUtil.ItemCallback<SchedulesListItem> {
@@ -34,8 +53,8 @@ public class SchedulesAdapter extends ListAdapter<SchedulesListItem, SchedulesAd
         @Override
         public boolean areItemsTheSame(@NonNull SchedulesListItem oldItem, @NonNull SchedulesListItem newItem) {
             boolean areItemsTheSame;
-            if (oldItem.isSectionTitle()){
-                areItemsTheSame = true;
+            if (oldItem.isSectionTitle() || newItem.isSectionTitle()){
+                areItemsTheSame = false;
             } else {
                 areItemsTheSame = ((Schedule) oldItem).getId().equals(((Schedule) newItem).getId());
             }
@@ -105,6 +124,25 @@ public class SchedulesAdapter extends ListAdapter<SchedulesListItem, SchedulesAd
             checkinTV = itemView.findViewById(R.id.checkin_value);
             checkoutTV = itemView.findViewById(R.id.checkout_value);
             costTV = itemView.findViewById(R.id.cost_value);
+
+            itemView.setOnLongClickListener(view -> {
+                int position = this.getAdapterPosition();
+
+                new AlertDialog.Builder(view.getContext())
+                        .setTitle("¿Está seguro que quiere eliminar esta reserva?")
+                        .setCancelable(true)
+                        .setNegativeButton(android.R.string.cancel, null)
+                        .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                onDeleteCallback.run(position);
+                                Toast.makeText(view.getContext(), "Eliminando reserva...", Toast.LENGTH_LONG).show();
+                                dialog.dismiss(); // COMENTAR CUANDO SE COMENTE EL MENSAJE Y SE DESCOMENTE createSchedule() ya que está dentro de createSchedule
+
+                            }
+                        }).show();
+                return true;
+            });
         }
 
         public void setSchedule(Schedule schedule) {
