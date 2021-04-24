@@ -84,14 +84,15 @@ public class MapsFragment extends Fragment {
                 if (location != null || !location.equals("")){
                     Geocoder geocoder = new Geocoder(getContext());
                     try {
-                        addressList = geocoder.getFromLocationName(location, 1000);
+                        addressList = geocoder.getFromLocationName(location, 10);
+                        Address address = addressList.get(0);
+                        LatLng latLng = new LatLng(address.getLatitude(), address.getLongitude());
+//                    googleMap.addMarker(new MarkerOptions().position(latLng).title(location));
+                        googleMap.animateCamera(CameraUpdateFactory.newLatLng(latLng));
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
-                    Address address = addressList.get(0);
-                    LatLng latLng = new LatLng(address.getLatitude(), address.getLongitude());
-//                    googleMap.addMarker(new MarkerOptions().position(latLng).title(location));
-                    googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 13));
+
 
                 }
 
