@@ -36,8 +36,6 @@ public class SchedulesViewModel extends ViewModel {
 
     private void sortAndShow(ArrayList<Schedule> scheds) {
 
-        if (scheds.isEmpty()) return;
-
         ArrayList<SchedulesListItem> results = new ArrayList<>();
         Date now = new Date();
 
